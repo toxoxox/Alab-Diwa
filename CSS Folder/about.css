@@ -884,7 +884,7 @@ body {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
+        display: none;
     }
 
     /* Ensure dropdown menu appears in correct position */
