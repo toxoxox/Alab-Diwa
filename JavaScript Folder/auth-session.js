@@ -57,27 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
         initialAuthCheck = false;
     });
 
-    // Sign in with Google
-    signInButton.addEventListener('click', async () => {
-        try {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            // First try popup
-            try {
-                await auth.signInWithPopup(provider);
-            } catch (popupError) {
-                // If popup is blocked, try redirect method
-                if (popupError.code === 'auth/popup-blocked') {
-                    console.log('Popup was blocked, trying redirect...');
-                    await auth.signInWithRedirect(provider);
-                } else {
-                    throw popupError;
-                }
-            }
-        } catch (error) {
-            console.error('Error signing in:', error);
+   // Sign in with Google
+signInButton.addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    auth.signInWithPopup(provider).catch((error) => {
+        // Log error code and message for debugging
+        console.error('Error signing in:', error.code, error.message);
+        
+        if (error.code === 'auth/popup-blocked') {
+            console.log('Popup was blocked, trying redirect...');
+            auth.signInWithRedirect(provider);
+        } else {
             alert('Failed to sign in. Please try again or check your popup blocker settings.');
         }
     });
+});
+
 
     // Sign out
     signOutButton.addEventListener('click', async () => {
