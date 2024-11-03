@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News and Articles - Alab Diwa</title>
+    <link rel="icon" type="image/x-icon" href="../Images Folder/favicon.ico">
+    <link rel="stylesheet" href="../CSS Folder/news-and-articles.css" />
+    <link rel="stylesheet" href="../CSS Folder/auth.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="news-articles-page">
+    <!-- Navigation section -->
+    <nav>
+      <div class="nav__content">
+        <!-- Burger menu on the left -->
+        <button class="burger" aria-label="Toggle navigation menu">
+          <div class="burger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <!-- Logo in center -->
+        <a href="index.html" class="logo" aria-label="Go to home page">
+          <span>Alab Diwa</span>
+        </a>
+
+        <!-- Navigation links -->
+        <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li>
+            <a href="news-and-articles.html" class="active">News & Articles</a>
+          </li>
+        </ul>
+
+        <!-- Auth container on the right -->
+        <div class="auth-container">
+          <button
+            id="google-signin"
+            class="auth-button"
+            aria-label="Sign in with Google"
+          >
+            <img
+              src="../Images Folder/google-icon.svg"
+              alt=""
+              class="google-icon"
+            />
+            <span class="auth-text">Sign in</span>
+          </button>
+          <div class="profile-dropdown" style="display: none">
+            <button
+              id="profile-button"
+              class="profile-button"
+              aria-label="Profile menu"
+              aria-expanded="false"
+            >
+              <img id="profile-picture" src="" alt="" class="profile-picture" />
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <div class="dropdown-header">
+                <img
+                  id="dropdown-profile-picture"
+                  src=""
+                  alt=""
+                  class="dropdown-profile-picture"
+                />
+                <div class="dropdown-user-info">
+                  <span id="dropdown-name"></span>
+                  <span id="dropdown-email"></span>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button id="google-signout" class="dropdown-item">
+                Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content for News and Articles page -->
+    <main class="news-articles-container">
+      <h1 class="news-articles-title fade-in-up">News and Articles</h1>
+      <div class="categories-section fade-in">
+        <button class="category-button active" data-category="All">All</button>
+        <button class="category-button" data-category="Technology">
+          Technology
+        </button>
+        <button class="category-button" data-category="Campus News">
+          Campus News
+        </button>
+        <button class="category-button" data-category="Features">
+          Features
+        </button>
+        <button class="category-button" data-category="Events">Events</button>
+        <button class="category-button" data-category="Investigation">
+          Investigation
+        </button>
+        <button class="category-button" data-category="Culture">Culture</button>
+        <button class="category-button" data-category="Sports">Sports</button>
+        <button class="category-button" data-category="Health">Health</button>
+      </div>
+      <div id="news-articles-grid" class="news-articles-grid">
+        <!-- News and Articles will be dynamically inserted here -->
+        <template id="article-template">
+          <article class="news-article" data-article-id="${articleId}">
+            <!-- Existing article content -->
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+              <h2 class="comments-section__title">Comments</h2>
+              <div class="comments-container"></div>
+
+              <!-- Comment Form -->
+              <div class="comment-form">
+                <h3 class="comment-form__title">Leave a Comment</h3>
+                <textarea
+                  class="comment-input"
+                  placeholder="Write your comment..."
+                  aria-label="Write your comment"
+                  disabled
+                ></textarea>
+                <button class="comment-submit" disabled>Post Comment</button>
+                <p class="comment-login-message">
+                  Please <button class="login-prompt">sign in</button> to leave
+                  a comment.
+                </p>
+              </div>
+            </section>
+          </article>
+        </template>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <div class="footer__section">
+          <h3 class="footer__title">Alab Diwa</h3>
+          <p class="footer__description">
+            Alab ng Panulat, Diwa ng Katotohanan
+          </p>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Quick Links</h3>
+          <ul class="footer__links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news-and-articles.html">News & Articles</a></li>
+          </ul>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Contact Us</h3>
+          <p>Email: alabdiwafhs@gmail.com</p>
+          <p>Facebook: Alab Diwa X Eloquence</p>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Follow Us</h3>
+          <div class="footer__social">
+            <a
+              href="https://www.facebook.com/profile.php?id=61564982967503"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg
+                class="facebook-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+                width="24"
+                height="24"
+              >
+                <path
+                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2023 Alab Diwa. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Add mobile search overlay -->
+    <div class="mobile-search-overlay">
+      <div class="mobile-search-header">
+        <button class="mobile-search-back" aria-label="Close search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            />
+          </svg>
+        </button>
+        <div class="mobile-search-input-container">
+          <input
+            type="text"
+            class="mobile-search-input"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+      </div>
+      <div class="mobile-search-results">
+        <!-- Search results will be dynamically inserted here -->
+      </div>
+    </div>
+
+    <!-- Update Firebase Scripts section -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <!-- Your Module Scripts -->
+    <script
+      type="module"
+      src="../JavaScript Folder/newsArticlesData.js"
+    ></script>
+    <script
+      type="module"
+      src="../JavaScript Folder/firebase-config.js"
+    ></script>
+    <script type="module" src="../JavaScript Folder/auth-session.js"></script>
+    <script
+      type="module"
+      src="../JavaScript Folder/generateNewsArticles.js"
+    ></script>
+    <script type="module" src="../JavaScript Folder/test.js"></script>
+
+    <!-- Non-module Scripts -->
+    <script src="../JavaScript Folder/script.js"></script>
+    <script src="../JavaScript Folder/search.js"></script>
+
+    <!-- Add this after your other module scripts -->
+    <script
+      type="module"
+      src="../JavaScript Folder/admin-claim-setup.js"
+    ></script>
+
+    <!-- Add this before the closing body tag -->
+    <script src="../JavaScript Folder/dropdown.js"></script>
+  </body>
+</html>

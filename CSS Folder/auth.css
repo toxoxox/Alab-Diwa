@@ -1,0 +1,289 @@
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #f5f5f5;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+}
+
+#user-info {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.highlight__comments {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.comments-title {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.comment-form {
+  margin-top: 1rem;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.comment-submit {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-picture {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 200px;
+  display: none;
+  z-index: 1000;
+  margin-top: 8px;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.dropdown-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#dropdown-name {
+  font-weight: 500;
+  color: #333;
+}
+
+#dropdown-email {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 4px 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.article-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.article__header {
+    margin-bottom: 2rem;
+}
+
+.article__title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.article__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #666;
+}
+
+.article__author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.article__author-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comments-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.comments-section__title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.comment-form__title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.comment-login-message {
+    margin-top: 1rem;
+    color: #666;
+}
+
+.login-prompt {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    text-decoration: underline;
+}
+
+.login-prompt:hover {
+    color: #0056b3;
+}
+
+/* Add these styles */
+.news-article .comments-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.news-article .comment-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.news-article .comments-container {
+  margin: 1rem 0;
+}
+
+.news-article .comment {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.news-article .comment:last-child {
+  border-bottom: none;
+}
+
+.news-article .comment__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.news-article .comment__author-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.news-article .comment__meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-article .comment__author-name {
+  font-weight: 500;
+}
+
+.news-article .comment__date {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.news-article .comment__text {
+  margin-left: 2.5rem;
+  color: #333;
+} 

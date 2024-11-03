@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Alab Diwa</title>
+    <link rel="icon" type="image/x-icon" href="../Images Folder/favicon.ico">
+    <link rel="stylesheet" href="../CSS Folder/about.css" />
+    <link rel="stylesheet" href="../CSS Folder/auth.css" />
+    <link rel="stylesheet" href="../CSS Folder/admin.css" />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <!-- Navigation section -->
+    <nav>
+      <div class="nav__content">
+        <!-- Burger menu on the left -->
+        <button class="burger" aria-label="Toggle navigation menu">
+          <div class="burger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <!-- Logo in center -->
+        <a href="index.html" class="logo" aria-label="Go to home page">
+          <span>Alab Diwa</span>
+        </a>
+
+        <!-- Navigation links -->
+        <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="news-and-articles.html">News & Articles</a></li>
+        </ul>
+
+        <!-- Auth container on the right -->
+        <div class="auth-container">
+          <button id="google-signin" class="auth-button" aria-label="Sign in with Google">
+            <img src="../Images Folder/google-icon.svg" alt="" class="google-icon"/>
+            <span class="auth-text">Sign in</span>
+          </button>
+          <div class="profile-dropdown">
+            <button id="profile-button" class="profile-button" aria-label="Profile menu" aria-expanded="false">
+              <img id="profile-picture" src="" alt="" class="profile-picture"/>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <div class="dropdown-header">
+                <img id="dropdown-profile-picture" src="" alt="" class="dropdown-profile-picture"/>
+                <div class="dropdown-user-info">
+                  <span id="dropdown-name"></span>
+                  <span id="dropdown-email"></span>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button id="google-signout" class="dropdown-item">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Main content -->
+    <main>
+      <!-- Add this after nav and before members spotlight section -->
+      <section class="mission-section">
+        <div class="mission-container">
+            <h2 class="mission-title fade-in-up">Misyon ng Alab Diwa</h2>
+            
+            <div class="mission-content">
+                <!-- Mission -->
+                <div class="mission-item fade-in-left">
+                    <div class="mission-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
+                            <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.93 12H18v7h-4v-6H10v6H6v-7H4.07L12 4.84z"/>
+                        </svg>
+                    </div>
+                    <h3>Aming Misyon</h3>
+                    <p>Nakatuon sa paglinang ng mga kabataang manunulat at mamamahayag, nagtataguyod ng kalayaan sa pamamahayag at pagpapalakas ng boses ng mga mag-aaral.</p>
+                </div>
+
+                <!-- Values -->
+                <div class="mission-item fade-in">
+                    <div class="mission-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <h3>Aming mga Pagpapahalaga</h3>
+                    <p>Katapatan sa pamamahayag, katotohanan, at pagrespeto sa karapatan ng bawat isa para sa mas mabuting komunidad.</p>
+                </div>
+
+                <!-- History -->
+                <div class="mission-item fade-in-right">
+                    <div class="mission-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
+                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/>
+                        </svg>
+                    </div>
+                    <h3>Aming Kasaysayan</h3>
+                    <p>Itinatag noong 2023, patuloy kaming lumalago at umuunlad bilang boses ng mga mag-aaral sa pamamahayag.</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Members Spotlight Section -->
+      <section class="members-spotlight">
+        <div class="members-spotlight__header fade-in-up">
+          <h2 class="members-spotlight__title">Mga Patnugot</h2>
+          <p class="members-spotlight__subtitle">Lupon ng Patnugutan</p>
+        </div>
+        <div class="members-spotlight__grid">
+          <!-- Editor-in-Chief -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Eishi Mae C. Bayot - Punong Patnugot"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Eishi Mae C. Bayot</h3>
+              <span class="member-card__position">Punong Patnugot</span>
+            </div>
+          </article>
+
+          <!-- Associate Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni Mhack Andrew Mangonlay - Katuwang na Patnugot"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Mhack Andrew Mangonlay</h3>
+              <span class="member-card__position">Katuwang na Patnugot</span>
+            </div>
+          </article>
+
+          <!-- Managing Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Noemi O. Sembrano - Tagapagmahalang Patnugot"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Noemi O. Sembrano</h3>
+              <span class="member-card__position"
+                >Tagapagmahalang Patnugot</span
+              >
+            </div>
+          </article>
+
+          <!-- News Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni John Clark Ople - Tagapagmahala ng Sirkulasyon"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">John Clark Ople</h3>
+              <span class="member-card__position"
+                >Tagapagmahala ng Sirkulasyon</span
+              >
+            </div>
+          </article>
+
+          <!-- Feature Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni Sonny Galanza Jr. - Tagawastong Patnugot"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Sonny Galanza Jr.</h3>
+              <span class="member-card__position">Tagawastong Patnugot</span>
+            </div>
+          </article>
+
+          <!-- Sports Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Jovy Ann Costales - Patnugot sa Balita"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Jovy Ann Costales</h3>
+              <span class="member-card__position">Patnugot sa Balita</span>
+            </div>
+          </article>
+
+          <!-- Literary Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Emma Lim - Patnugot sa Opinyon"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Eujeanne C. Villarante</h3>
+              <span class="member-card__position">Patnugot sa Opinyon</span>
+            </div>
+          </article>
+
+          <!-- Art Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Sofia Mendoza - Patnugot sa Lathalain"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Astrid D. Emlat</h3>
+              <span class="member-card__position">Patnugot sa Lathalain</span>
+            </div>
+          </article>
+
+          <!-- Layout Editor -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Nathan Dela Cruz - Patnugot sa Larawang Pampahayag"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Jadaree Edge Habijan</h3>
+              <span class="member-card__position"
+                >Patnugot sa Larawang Pampahayag</span
+              >
+            </div>
+          </article>
+
+          <!-- Photojournalist -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni Daniel Santos - Patnugot sa Isports"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">John Rey Aniceto</h3>
+              <span class="member-card__position">Patnugot sa Isports</span>
+            </div>
+          </article>
+
+          <!-- Circulation Manager -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Mia Torres - Patnugot sa Dibuho"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Audrey Barramedo</h3>
+              <span class="member-card__position">Patnugot sa Dibuho</span>
+            </div>
+          </article>
+
+          <!-- Business Manager -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Adrian Reyes - Tagapagmahalang Pangmidya"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Venice Benitez</h3>
+              <span class="member-card__position"
+                >Tagapagmahalang Pangmidya</span
+              >
+            </div>
+          </article>
+
+          <!-- Staff Writers -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni Ava Lim - Direktor na Tagapamahala sa Telebisyonn"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Alvic Velasco</h3>
+              <span class="member-card__position"
+                >Direktor na Tagapamahala sa Telebisyonn</span
+              >
+            </div>
+          </article>
+
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Oliver Cruz - Direktor na Tagapamahala sa Radyo"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Alyssa Mabansag</h3>
+              <span class="member-card__position"
+                >Direktor na Tagapamahala sa Radyo</span
+              >
+            </div>
+          </article>
+
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Luna Garcia - Tagaanyo at Sining Pangmidya"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Rhianne Jhiazei Leonardo</h3>
+              <span class="member-card__position"
+                >Tagaanyo at Sining Pangmidya</span
+              >
+            </div>
+          </article>
+
+          <!-- Cartoonists -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/man-icon.png"
+                alt="Larawan ni Leo Santos - Dibuhistang Pang-elektroniko"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Zydie Leander S. Dominguez</h3>
+              <span class="member-card__position"
+                >Dibuhistang Pang-elektroniko</span
+              >
+            </div>
+          </article>
+
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Zoe Tan - Katuwang na Tagpagpayo"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Joanne Camille Mabilog</h3>
+              <span class="member-card__position">Katuwang na Tagpagpayo</span>
+            </div>
+          </article>
+
+          <!-- Layout Artists -->
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Kai Mendoza - Tagapayo"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Gladys P. Rafols</h3>
+              <span class="member-card__position">Tagapayo</span>
+            </div>
+          </article>
+
+          <article class="member-card fade-in">
+            <div class="member-card__image">
+              <img
+                src="../Images Folder/woman-icon.png"
+                alt="Larawan ni Nina Reyes - Tagapagmahala ng Kagawaran ng Filipino"
+              />
+            </div>
+            <div class="member-card__content">
+              <h3 class="member-card__name">Michelle R. Tagacanao</h3>
+              <span class="member-card__position"
+                >Tagapagmahala ng Kagawaran ng Filipino</span
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section">
+        <div class="contact-container fade-in-up">
+          <h2 class="contact-title">Contact Us</h2>
+          <p class="contact-description">
+            May mga katanungan? Gusto naming makarinig mula sa iyo.
+          </p>
+
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="from_name">Name</label>
+              <input
+                type="text"
+                id="from_name"
+                name="from_name"
+                required
+                placeholder="Your name"
+              />
+              <span class="error-message" id="name-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="from_email">Email</label>
+              <input
+                type="email"
+                id="from_email"
+                name="from_email"
+                required
+                placeholder="Your email"
+              />
+              <span class="error-message" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                placeholder="Your message"
+                rows="5"
+              ></textarea>
+              <span class="error-message" id="message-error"></span>
+            </div>
+
+            <div id="status-message" class="status-message"></div>
+
+            <button type="submit" class="submit-btn">
+              <span class="btn-text">Send Message</span>
+              <div class="loading-spinner"></div>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Add this after the contact form section but before the footer -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <div class="footer__section">
+          <h3 class="footer__title">Alab Diwa</h3>
+          <p class="footer__description">
+            Alab ng Panulat, Diwa ng Katotohanan
+          </p>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Quick Links</h3>
+          <ul class="footer__links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news-and-articles.html">News & Articles</a></li>
+          </ul>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Contact Us</h3>
+          <p>Email: alabdiwafhs@gmail.com</p>
+          <p>Facebook: Alab Diwa X Eloquence</p>
+        </div>
+        <div class="footer__section">
+          <h3 class="footer__title">Follow Us</h3>
+          <div class="footer__social">
+            <a
+              href="https://www.facebook.com/profile.php?id=61564982967503"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg
+                class="facebook-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+                width="24"
+                height="24"
+              >
+                <path
+                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2023 Alab Diwa. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <!-- Module Scripts -->
+    <script
+      type="module"
+      src="../JavaScript Folder/firebase-config.js"
+    ></script>
+    <script type="module" src="../JavaScript Folder/auth-session.js"></script>
+    <script
+      type="module"
+      src="../JavaScript Folder/admin-claim-setup.js"
+    ></script>
+    <script type="module" src="../JavaScript Folder/contact.js"></script>
+
+    <!-- Non-module Scripts -->
+    <script src="../JavaScript Folder/script.js"></script>
+    <script src="../JavaScript Folder/dropdown.js"></script>
+  </body>
+</html>
