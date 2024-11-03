@@ -57,23 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initialAuthCheck = false;
     });
 
-   // Sign in with Google
-signInButton.addEventListener('click', () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    auth.signInWithPopup(provider).catch((error) => {
-        // Log error code and message for debugging
-        console.error('Error signing in:', error.code, error.message);
-        
-        if (error.code === 'auth/popup-blocked') {
-            console.log('Popup was blocked, trying redirect...');
-            auth.signInWithRedirect(provider);
-        } else {
-            alert('Failed to sign in. Please try again or check your popup blocker settings.');
-        }
+    // Sign in with Google (using redirect)
+    signInButton.addEventListener('click', () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithRedirect(provider);
     });
-});
-
 
     // Sign out
     signOutButton.addEventListener('click', async () => {
@@ -107,4 +95,4 @@ signInButton.addEventListener('click', () => {
             dropdownMenu.insertBefore(divider, dropdownMenu.firstChild);
         }
     }
-}); 
+});
