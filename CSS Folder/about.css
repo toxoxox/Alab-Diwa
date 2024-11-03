@@ -983,4 +983,7 @@ body {
     .mission-item p {
         max-width: 100%;
     }
+    .profile-picture {
+        display: none;
+    }
 }
