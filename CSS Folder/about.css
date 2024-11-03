@@ -874,7 +874,7 @@ body {
         border-radius: 50%;
         overflow: hidden;
         background: white;
-        display: flex !important;
+        display: none;
         align-items: center;
         justify-content: center;
         z-index: 1004;
