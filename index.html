@@ -1,444 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alab Diwa Journalism Club</title>
-    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico">
-    <link rel="stylesheet" href="CSS Folder/styles.css" />
-    <link rel="stylesheet" href="CSS Folder/auth.css" />
-  </head>
-  <body>
-    <!-- Loading Screen -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alab Diwa | PDF to Image Converter</title>
+    
+    <!-- Add favicon links -->
+    <link rel="icon" type="image/png" href="alab-logo.png">
+    <link rel="apple-touch-icon" href="alab-logo.png">
+    
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+</head>
+<body>
     <div id="loader-wrapper">
-      <div class="loader-content">
-        <div class="cube-wrapper">
-          <div class="cube">
-            <div class="cube__face cube__face--front">A</div>
-            <div class="cube__face cube__face--back">D</div>
-            <div class="cube__face cube__face--right">L</div>
-            <div class="cube__face cube__face--left">B</div>
-            <div class="cube__face cube__face--top">A</div>
-            <div class="cube__face cube__face--bottom">W</div>
-          </div>
-        </div>
-        <div class="title"><span>ALAB</span> <span>DIWA</span></div>
-        <div class="line"></div>
-        <div class="subtitle">MADE BY EARL</div>
-      </div>
-    </div>
-
-    <!-- Navigation section -->
-    <nav>
-      <div class="nav__content">
-        <!-- Burger menu on the left -->
-        <button class="burger" aria-label="Toggle navigation menu">
-          <div class="burger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </button>
-
-        <!-- Logo in center -->
-        <a href="index.html" class="logo" aria-label="Go to home page">
-          <span>Alab Diwa</span>
-        </a>
-
-        <!-- Navigation links -->
-        <ul class="nav__links">
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="news-and-articles.html">News & Articles</a></li>
-        </ul>
-
-        <!-- Auth container on the right -->
-        <div class="auth-container">
-          <button
-            id="google-signin"
-            class="auth-button"
-            aria-label="Sign in with Google"
-          >
-            <img
-              src="Images Folder/google-icon.svg"
-              alt=""
-              class="google-icon"
-            />
-            <span class="auth-text">Sign in</span>
-          </button>
-          <div class="profile-dropdown">
-            <button
-              id="profile-button"
-              class="profile-button"
-              aria-label="Profile menu"
-              aria-expanded="false"
-            >
-              <img id="profile-picture" src="" alt="" class="profile-picture" />
-            </button>
-            <div class="dropdown-menu" id="dropdown-menu">
-              <div class="dropdown-header">
-                <img
-                  id="dropdown-profile-picture"
-                  src=""
-                  alt=""
-                  class="dropdown-profile-picture"
-                />
-                <div class="dropdown-user-info">
-                  <span id="dropdown-name"></span>
-                  <span id="dropdown-email"></span>
+        <div class="loader-content">
+            <div class="cube-wrapper">
+                <div class="cube">
+                    <div class="cube__face cube__face--front">A</div>
+                    <div class="cube__face cube__face--back">D</div>
+                    <div class="cube__face cube__face--right">L</div>
+                    <div class="cube__face cube__face--left">B</div>
+                    <div class="cube__face cube__face--top">A</div>
+                    <div class="cube__face cube__face--bottom">W</div>
                 </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <button id="google-signout" class="dropdown-item">
-                Sign out
-              </button>
             </div>
-          </div>
+            <div class="title"><span>ALAB</span> <span>DIWA</span></div>
+            <div class="line"></div>
+            <div class="subtitle">MADE BY EARL</div>
         </div>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero scroll-animation">
-      <div class="hero-content">
-        <h1 class="hero__title">Alab ng Panulat, Diwa ng Katotohanan</h1>
-        <p class="hero__description">
-          Tara na sa Alab Diwa! Sama-sama nating tuklasin ang kapangyarihan ng
-          kwento at balita. Dito, hinuhubog ang susunod na henerasyon ng mga
-          mamamahayag para sa mas mulat na paaralan.
-        </p>
-        <!-- Switch the order of the buttons -->
-        <a href="about.html" class="hero__join-button" aria-label="Join Us"
-          >Join Us</a
-        >
-        <a
-          href="news-and-articles.html"
-          id="read-article-btn"
-          class="hero__cta-button"
-          aria-label="Read the latest article"
-          >Read Article</a
-        >
-      </div>
-    </section>
-
-    <!-- About Alab Diwa Section -->
-    <section class="about">
-      <div class="about__content fade-in-left">
-        <h1 class="about__title">Tungkol sa Alab Diwa</h1>
-        <p class="about__description">
-          Ang Alab Diwa ay isang masigla at aktibong journalism club na nakatuon
-          sa paglinang ng susunod na henerasyon ng mga manunulat at tagahanap ng
-          katotohanan. Ang aming misyon ay bigyang lakas ang mga mag-aaral upang
-          tuklasin ang kapangyarihan ng mga kwento at balita, na nagtataguyod ng
-          mas maalam na komunidad ng paaralan.
-        </p>
-        <div class="about__stats-grid">
-          <div class="about__stat">
-            <h2 class="about__stat-title">
-              <span class="count" data-end-value="2023">0</span> Itinatag
-            </h2>
-            <p class="about__stat-description">
-              Itinatag noong 2023, ang Alab Diwa ay naging tanglaw ng kahusayan
-              sa pamamahayag at pagkamalikhain, na nagbibigay inspirasyon sa mga
-              mag-aaral na hangarin ang katotohanan at pagsasalaysay.
-            </p>
-          </div>
-          <div class="about__stat">
-            <h2 class="about__stat-title">
-              <span class="count" data-end-value="150">0</span> Kasapi
-            </h2>
-            <p class="about__stat-description">
-              May higit sa 150 aktibong kasapi, ang aming samahan ay isang
-              masigla at maunlad na komunidad ng mga taong may puso sa pagbabago
-              sa pamamagitan ng pamamahayag.
-            </p>
-          </div>
-          <div class="about__stat">
-            <h2 class="about__stat-title">
-              <span class="count" data-end-value="64">0</span> Artikulo
-            </h2>
-            <p class="about__stat-description">
-              Ang aming mga kasapi ay sama-samang naglathala ng higit sa 64 na
-              artikulo, na sumasaklaw sa iba't ibang paksa at nagpapakita ng
-              kanilang magkakaibang talento at pananaw.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="about__image fade-in-right">
-        <img src="Images Folder/about-photo.jpg" alt="Alab Diwa Club" />
-      </div>
-    </section>
-
-    <!-- Recent Highlights Section -->
-    <section class="highlights">
-      <div class="highlights__header fade-in-up">
-        <h2 class="highlights__title">Recent Highlights</h2>
-        <p class="highlights__subtitle">
-          Explore our latest stories and achievements
-        </p>
-      </div>
-      <div class="highlights__grid">
-        <div class="highlight fade-in">
-          <img
-            src="Images Folder/sir-steve.jpg"
-            alt="Highlight 1"
-            class="highlight__image"
-          />
-          <div class="highlight__content">
-            <span class="highlight__category">Campus News</span>
-            <h3 class="highlight__title">
-              Send-Off Program para sa punungguro na si G. Tiburcio "Steve"
-              Aplacador, Jr.
-            </h3>
-            <p class="highlight__description">
-              Nagsama-sama ang mga guro, mag-aaral at SPTA Officers upang
-              ipakita at ipahayag ang taus-pusong pasasalamat kay SIr Steve na
-              nakatakdang lumipat na ng pamumuno sa Parang High School.
-            </p>
-            <div class="highlight__meta">
-              <span class="highlight__date">Published: Nov 28, 2024</span>
-              <!-- Add Read More button -->
-              <a href="#" class="highlight__read-more">Read More</a>
-            </div>
-            <div class="highlight__author">
-              <img
-                src="Images Folder/woman-icon.png"
-                alt="Author 1"
-                class="highlight__author-image"
-              />
-              <span class="highlight__author-name">Alab Diwa</span>
-            </div>
-          </div>
-        </div>
-        <!-- Repeat for other highlights -->
-        <div class="highlight fade-in">
-          <img
-            src="Images Folder/campus-koneksyon.jpg"
-            alt="Highlight 2"
-            class="highlight__image"
-          />
-          <div class="highlight__content">
-            <span class="highlight__category">Events</span>
-            <h3 class="highlight__title">
-              TULOY ANG KONEKSYON PARA SA KAALAMAN at KARANASAN!
-            </h3>
-            <p class="highlight__description">
-              Muling nagbalik para sa Season 2 ang mga iskolar ng PUP
-              Broadcircle para sa Campus Koneksyon!
-            </p>
-            <div class="highlight__meta">
-              <span class="highlight__date">Published: Oct 26, 2024</span>
-              <div class="highlight__author">
-                <img
-                  src="Images Folder/woman-icon.png"
-                  alt="Author 2"
-                  class="highlight__author-image"
-                />
-                <span class="highlight__author-name"
-                  >Aldana Hannah Pabilonia</span
-                >
-              </div>
-            </div>
-            <!-- Add Read More button -->
-            <a href="#" class="highlight__read-more">Read More</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Members Spotlight Section -->
-    <section class="members-spotlight">
-      <div class="members-spotlight__header fade-in-up">
-        <h2 class="members-spotlight__title">Mga Patnugot</h2>
-        <p class="members-spotlight__subtitle">Lupon ng Patnugutan</p>
-      </div>
-      <div class="members-spotlight__grid">
-        <!-- Editor-in-Chief -->
-        <article class="member-card fade-in">
-          <div class="member-card__image">
-            <img
-              src="Images Folder/woman-icon.png"
-              alt="Portrait of Eishi Mae C. Bayot"
-            />
-          </div>
-          <div class="member-card__content">
-            <h3 class="member-card__name">Eishi Mae C. Bayot</h3>
-            <span class="member-card__position">Punong Patnugot</span>
-          </div>
-        </article>
-
-        <!-- Associate Editor -->
-        <article class="member-card fade-in">
-          <div class="member-card__image">
-            <img
-              src="Images Folder/man-icon.png"
-              alt="Portrait of Mhack Andrew Mangonlay"
-            />
-          </div>
-          <div class="member-card__content">
-            <h3 class="member-card__name">Mhack Andrew Mangonlay</h3>
-            <span class="member-card__position">Katuwang na Patnugot</span>
-          </div>
-        </article>
-
-        <!-- Managing Editor -->
-        <article class="member-card fade-in">
-          <div class="member-card__image">
-            <img
-              src="Images Folder/woman-icon.png"
-              alt="Portrait of Noemi O. Sembrano"
-            />
-          </div>
-          <div class="member-card__content">
-            <h3 class="member-card__name">Noemi O. Sembrano</h3>
-            <span class="member-card__position">Tagapagmahalang Patnugot</span>
-          </div>
-        </article>
-
-        <!-- News Editor -->
-        <article class="member-card fade-in">
-          <div class="member-card__image">
-            <img
-              src="Images Folder/man-icon.png"
-              alt="Portrait of John Clark Ople"
-            />
-          </div>
-          <div class="member-card__content">
-            <h3 class="member-card__name">John Clark Ople</h3>
-            <span class="member-card__position"
-              >Tagapagmahala ng Sirkulasyon</span
-            >
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Club Activities Section -->
-    <section class="club-activities">
-      <div class="club-activities__header">
-        <h2 class="club-activities__title">Club Activities</h2>
-        <p class="club-activities__subtitle">
-          Explore our diverse range of activities and events
-        </p>
-      </div>
-      <div class="club-activities__grid">
-        <div class="activity-card">
-          <div class="activity-card__image-container">
-            <img
-              src="Images Folder/activity1.jpg"
-              alt="Writing Workshop"
-              class="activity-card__image"
-            />
-            <div class="activity-card__overlay">
-              <h3>Writing Workshop</h3>
-            </div>
-          </div>
-        </div>
-        <div class="activity-card">
-          <div class="activity-card__image-container">
-            <img
-              src="Images Folder/activity2.jpg"
-              alt="Debate Club"
-              class="activity-card__image"
-            />
-            <div class="activity-card__overlay">
-              <h3>Writing Workshop</h3>
-            </div>
-          </div>
-        </div>
-        <div class="activity-card">
-          <div class="activity-card__image-container">
-            <img
-              src="Images Folder/activity3.jpg"
-              alt="Photography Sessions"
-              class="activity-card__image"
-            />
-            <div class="activity-card__overlay">
-              <h3>Online Publishing</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Content -->
-    <div class="page-content">
-      <!-- Rest of your website content goes here -->
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer__content">
-        <div class="footer__section">
-          <h3 class="footer__title">Alab Diwa</h3>
-          <p class="footer__description">
-            Alab ng Panulat, Diwa ng Katotohanan
-          </p>
+    <header class="header">
+        <div class="header__container">
+            <span class="header__logo-text">Alab Diwa</span>
+            <h1 class="header__title">PDF to Image Converter</h1>
         </div>
-        <div class="footer__section">
-          <h3 class="footer__title">Quick Links</h3>
-          <ul class="footer__links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="news-and-articles.html">News & Articles</a></li>
-          </ul>
-        </div>
-        <div class="footer__section">
-          <h3 class="footer__title">Contact Us</h3>
-          <p>Email: alabdiwafhs@gmail.com</p>
-          <p>Facebook: Alab Diwa X Eloquence</p>
-        </div>
-        <div class="footer__section">
-          <h3 class="footer__title">Follow Us</h3>
-          <div class="footer__social">
-            <a
-              href="https://www.facebook.com/profile.php?id=61564982967503"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
+    </header>
+
+    <main class="main">
+        <section class="converter" aria-label="PDF conversion section">
+            <div class="converter__upload-area" id="uploadArea">
+                <input 
+                    type="file" 
+                    id="pdfInput" 
+                    class="converter__file-input" 
+                    accept=".pdf"
+                    aria-label="Choose PDF file to convert"
+                >
+                <svg class="converter__upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M17 8l-5-5-5 5" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 3v12" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h2 class="converter__title">Drop your PDF here</h2>
+                <p class="converter__subtitle">or click to browse</p>
+            </div>
+
+            <div class="settings__group">
+                <label for="imageQuality" class="settings__label">Image Quality:</label>
+                <select id="imageQuality" class="settings__select">
+                    <option value="high">High Quality</option>
+                    <option value="medium" selected>Medium Quality</option>
+                    <option value="low">Low Quality</option>
+                </select>
+            </div>
+
+            <button 
+                id="convertButton" 
+                class="converter__button" 
+                disabled
+                aria-label="Convert PDF to images"
             >
-              <svg
-                class="facebook-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 320 512"
-                width="24"
-                height="24"
-              >
-                <path
-                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2023 Alab Diwa. All rights reserved.</p>
-      </div>
+                Convert to Images
+            </button>
+
+            <div id="results" class="converter__results" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Alab Diwa. All rights reserved.</p>
     </footer>
 
-    <!-- Firebase Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
-    <!-- Module Scripts -->
-    <script
-      type="module"
-      src="JavaScript Folder/firebase-config.js"
-    ></script>
-    <script type="module" src="JavaScript Folder/auth-session.js"></script>
-    <script
-      type="module"
-      src="JavaScript Folder/admin-claim-setup.js"
-    ></script>
-    <script type="module" src="JavaScript Folder/test.js"></script>
-
-    <!-- Non-module Scripts -->
-    <script src="JavaScript Folder/script.js"></script>
-
-    <!-- Add this before the closing body tag -->
-    <script src="JavaScript Folder/dropdown.js"></script>
-  </body>
+    <script src="index.js"></script>
+</body>
 </html>
