@@ -1,4 +1,3 @@
-// Initialize Firebase with your config
 const firebaseConfig = {
     apiKey: "AIzaSyD0xRQ1DV9g7Wm7E1mlzOUjTwiNu4sZnR0",
     authDomain: "alab-diwa-7b218.firebaseapp.com",
@@ -10,39 +9,26 @@ const firebaseConfig = {
     measurementId: "G-0RV9SV4TGX"
 };
 
-// Initialize Firebase using compat version
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps?.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 const auth = firebase.auth();
 const database = firebase.database();
 
-// Add admin check function
-export async function checkIfAdmin(uid) {
-    if (!uid) return false;
-    
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .catch((error) => {
+        // Handle error silently or with a proper error handling system
+    });
+
+export const checkDatabaseAccess = async () => {
     try {
-        const adminRef = database.ref(`admins/${uid}`);
-        const snapshot = await adminRef.once('value');
-        return snapshot.exists();
+        const testRef = database.ref('.info/connected');
+        await testRef.once('value');
+        return true;
     } catch (error) {
-        console.error('Error checking admin status:', error);
         return false;
     }
-}
+};
 
-// Add this function to check database access
-export async function checkDatabaseAccess(path) {
-    const user = auth.currentUser;
-    if (!user) return false;
-    
-    try {
-        // Only check admins node since we've simplified the admin structure
-        const adminRef = database.ref(`admins/${user.uid}`);
-        const snapshot = await adminRef.once('value');
-        return snapshot.exists();
-    } catch (error) {
-        console.error('Error checking database access:', error);
-        return false;
-    }
-}
-
-export { auth, database, firebaseConfig }; 
+export { auth, database }; 

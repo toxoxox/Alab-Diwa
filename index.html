@@ -4,29 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alab Diwa Journalism Club</title>
-    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico" />
     <link rel="stylesheet" href="CSS Folder/styles.css" />
     <link rel="stylesheet" href="CSS Folder/auth.css" />
   </head>
   <body>
     <!-- Loading Screen -->
-    <div id="loader-wrapper">
-      <div class="loader-content">
-        <div class="cube-wrapper">
-          <div class="cube">
-            <div class="cube__face cube__face--front">A</div>
-            <div class="cube__face cube__face--back">D</div>
-            <div class="cube__face cube__face--right">L</div>
-            <div class="cube__face cube__face--left">B</div>
-            <div class="cube__face cube__face--top">A</div>
-            <div class="cube__face cube__face--bottom">W</div>
-          </div>
-        </div>
-        <div class="title"><span>ALAB</span> <span>DIWA</span></div>
-        <div class="line"></div>
-        <div class="subtitle">MADE BY EARL</div>
-      </div>
-    </div>
+    
+
     <!-- Navigation section -->
     <nav>
       <div class="nav__content">
@@ -38,16 +23,19 @@
             <span></span>
           </div>
         </button>
+
         <!-- Logo in center -->
         <a href="index.html" class="logo" aria-label="Go to home page">
           <span>Alab Diwa</span>
         </a>
+
         <!-- Navigation links -->
         <ul class="nav__links">
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="news-and-articles.html">News & Articles</a></li>
         </ul>
+
         <!-- Auth container on the right -->
         <div class="auth-container">
           <button
@@ -63,6 +51,7 @@
             <span class="auth-text">Sign in</span>
           </button>
           <div class="profile-dropdown">
+            <div class="welcome-text">Hi, <span id="nav-user-name"></span></div>
             <button
               id="profile-button"
               class="profile-button"
@@ -93,6 +82,22 @@
         </div>
       </div>
     </nav>
+
+    <!-- Add this right after the nav element -->
+    <div class="theme-container">
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg
+          class="sun-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
+          />
+        </svg>
+      </button>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero scroll-animation">
       <div class="hero-content">
@@ -115,6 +120,7 @@
         >
       </div>
     </section>
+
     <!-- About Alab Diwa Section -->
     <section class="about">
       <div class="about__content fade-in-left">
@@ -163,6 +169,7 @@
         <img src="Images Folder/about-photo.jpg" alt="Alab Diwa Club" />
       </div>
     </section>
+
     <!-- Recent Highlights Section -->
     <section class="highlights">
       <div class="highlights__header fade-in-up">
@@ -239,6 +246,7 @@
         </div>
       </div>
     </section>
+
     <!-- Members Spotlight Section -->
     <section class="members-spotlight">
       <div class="members-spotlight__header fade-in-up">
@@ -259,6 +267,7 @@
             <span class="member-card__position">Punong Patnugot</span>
           </div>
         </article>
+
         <!-- Associate Editor -->
         <article class="member-card fade-in">
           <div class="member-card__image">
@@ -272,6 +281,7 @@
             <span class="member-card__position">Katuwang na Patnugot</span>
           </div>
         </article>
+
         <!-- Managing Editor -->
         <article class="member-card fade-in">
           <div class="member-card__image">
@@ -285,6 +295,7 @@
             <span class="member-card__position">Tagapagmahalang Patnugot</span>
           </div>
         </article>
+
         <!-- News Editor -->
         <article class="member-card fade-in">
           <div class="member-card__image">
@@ -302,6 +313,7 @@
         </article>
       </div>
     </section>
+
     <!-- Club Activities Section -->
     <section class="club-activities">
       <div class="club-activities__header">
@@ -349,10 +361,12 @@
         </div>
       </div>
     </section>
+
     <!-- Main Content -->
     <div class="page-content">
       <!-- Rest of your website content goes here -->
     </div>
+
     <!-- Footer -->
     <footer class="footer">
       <div class="footer__content">
@@ -403,24 +417,23 @@
         <p>&copy; 2023 Alab Diwa. All rights reserved.</p>
       </div>
     </footer>
+
     <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <!-- Module Scripts -->
-    <script
-      type="module"
-      src="JavaScript Folder/firebase-config.js"
-    ></script>
+    <script type="module" src="JavaScript Folder/firebase-config.js"></script>
     <script type="module" src="JavaScript Folder/auth-session.js"></script>
-    <script
-      type="module"
-      src="JavaScript Folder/admin-claim-setup.js"
-    ></script>
+    <script type="module" src="JavaScript Folder/admin-claim-setup.js"></script>
     <script type="module" src="JavaScript Folder/test.js"></script>
+
     <!-- Non-module Scripts -->
     <script src="JavaScript Folder/script.js"></script>
+
     <!-- Add this before the closing body tag -->
     <script src="JavaScript Folder/dropdown.js"></script>
+    <script src="JavaScript Folder/theme.js"></script>
   </body>
 </html>

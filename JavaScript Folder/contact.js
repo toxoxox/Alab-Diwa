@@ -1,53 +1,39 @@
-// Import Firebase instances from existing config
-import { auth, database, checkIfAdmin, checkDatabaseAccess } from './firebase-config.js';
+import { auth, database } from './firebase-config.js';
+import { checkDatabaseAccess } from './firebase-config.js';
+import { checkIfAdmin } from './admin-claim-setup.js';
 
-// Initialize EmailJS after DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     emailjs.init("KMtLS07YL8ny518ug");
     
-    // Listen for auth state changes
     auth.onAuthStateChanged(async (user) => {
         if (user) {
-            console.log('User logged in, checking restrictions...');
             await setupAdminFeatures();
-            await checkAndShowRestriction(); // Check restrictions when user logs in
+            await checkAndShowRestriction();
         }
     });
 
-    // Also check when the page loads if user is already logged in
     const currentUser = auth.currentUser;
     if (currentUser) {
-        console.log('User already logged in, checking restrictions...');
         checkAndShowRestriction();
     }
 });
 
-// Setup admin features
 async function setupAdminFeatures() {
     const user = auth.currentUser;
-    console.log('Current user:', user);
     if (!user) {
-        console.log('No user logged in');
         return;
     }
 
     const dropdownMenu = document.querySelector('.dropdown-menu');
     const divider = document.querySelector('.dropdown-divider');
     
-    console.log('Dropdown menu:', dropdownMenu);
-    console.log('Divider:', divider);
-    
     if (!dropdownMenu || !divider) {
-        console.log('Required elements not found');
         return;
     }
 
     const isAdmin = await checkIfAdmin(user.uid);
-    console.log('Is admin:', isAdmin);
     
     if (isAdmin) {
-        console.log('Adding admin features');
-        // Add admin panel and restrict users buttons to dropdown menu
         const adminPanelButton = document.createElement('button');
         adminPanelButton.className = 'dropdown-item admin-panel-button';
         adminPanelButton.innerHTML = `
@@ -57,7 +43,6 @@ async function setupAdminFeatures() {
             </svg>
         `;
         
-        // Add Restrict Users button
         const restrictButton = document.createElement('button');
         restrictButton.className = 'dropdown-item restrict-users-btn';
         restrictButton.innerHTML = `
@@ -67,19 +52,14 @@ async function setupAdminFeatures() {
             </svg>
         `;
         
-        // Insert buttons before the divider
         dropdownMenu.insertBefore(adminPanelButton, divider);
         dropdownMenu.insertBefore(restrictButton, divider);
         
-        // Add click events
         adminPanelButton.addEventListener('click', showAdminPanel);
         restrictButton.addEventListener('click', showRestrictUserPopup);
-    } else {
-        console.log('User is not an admin');
     }
 }
 
-// Show restrict user popup
 function showRestrictUserPopup() {
     const popup = document.createElement('div');
     popup.className = 'restrict-popup';
@@ -110,7 +90,6 @@ function showRestrictUserPopup() {
     
     document.body.appendChild(popup);
     
-    // Add event listeners
     const closeBtn = popup.querySelector('.close-popup');
     const cancelBtn = popup.querySelector('.cancel-btn');
     const restrictBtn = popup.querySelector('.restrict-btn');
@@ -118,7 +97,6 @@ function showRestrictUserPopup() {
     closeBtn.addEventListener('click', () => document.body.removeChild(popup));
     cancelBtn.addEventListener('click', () => document.body.removeChild(popup));
     
-    // Add input validation
     const emailInput = popup.querySelector('#user-email');
     const reasonInput = popup.querySelector('#restriction-reason');
     
@@ -134,10 +112,8 @@ function showRestrictUserPopup() {
         const email = emailInput.value.trim();
         const reason = reasonInput.value.trim();
         
-        // Clear previous errors
         popup.querySelectorAll('.error-message').forEach(el => el.textContent = '');
         
-        // Validate inputs
         let hasError = false;
         
         if (!email) {
@@ -156,7 +132,6 @@ function showRestrictUserPopup() {
         if (hasError) return;
         
         try {
-            // Check if user is already restricted
             const restrictionsRef = database.ref('userRestrictions');
             const snapshot = await restrictionsRef.orderByChild('email').equalTo(email).once('value');
             
@@ -168,7 +143,6 @@ function showRestrictUserPopup() {
             const timestamp = Date.now();
             const restrictedBy = auth.currentUser.email;
 
-            // Add restriction
             const newRestrictionRef = await restrictionsRef.push({
                 email: email,
                 reason: reason,
@@ -176,7 +150,6 @@ function showRestrictUserPopup() {
                 restrictedBy: restrictedBy
             });
 
-            // Add to restriction history
             await database.ref('restrictionHistory').push({
                 email: email,
                 reason: reason,
@@ -188,7 +161,7 @@ function showRestrictUserPopup() {
             
             showNotification('User has been restricted', 'success');
             document.body.removeChild(popup);
-            loadRestrictedUsers(); // Reload the list
+            loadRestrictedUsers();
             
         } catch (error) {
             console.error('Error restricting user:', error);
@@ -197,7 +170,6 @@ function showRestrictUserPopup() {
     });
 }
 
-// Show notification
 function showNotification(message, type) {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
@@ -216,29 +188,24 @@ function showNotification(message, type) {
     }, 100);
 }
 
-// Check if user is restricted before form submission
 async function checkUserRestriction(email) {
     const restrictionsRef = database.ref('userRestrictions');
     const snapshot = await restrictionsRef.orderByChild('email').equalTo(email).once('value');
     return snapshot.val();
 }
 
-// Keep your original form submission code and add restriction check
 document.getElementById('contact-form').addEventListener('submit', async function(event) {
     event.preventDefault();
     
     const submitBtn = this.querySelector('.submit-btn');
     const statusMessage = document.getElementById('status-message');
     
-    // Reset error messages
     document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
     
-    // Form validation
     const name = this.querySelector('#from_name').value;
     const email = this.querySelector('#from_email').value;
     const message = this.querySelector('#message').value;
     
-    // Check for restriction before proceeding
     const restriction = await checkUserRestriction(email);
     if (restriction) {
         const restrictionData = Object.values(restriction)[0];
@@ -247,7 +214,6 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         return;
     }
     
-    // Your existing validation and email sending code...
     const nameError = validateName(name);
     const emailError = validateEmail(email);
     const messageError = validateMessage(message);
@@ -259,13 +225,11 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         return;
     }
     
-    // Show loading state
     submitBtn.classList.add('loading');
     statusMessage.className = 'status-message';
     statusMessage.textContent = '';
     
     try {
-        // Send the email using EmailJS
         await emailjs.send(
             'service_alab_diwa',      // Service ID
             'template_alab_diwa',     // Template ID
@@ -277,13 +241,11 @@ document.getElementById('contact-form').addEventListener('submit', async functio
             }
         );
         
-        // Success
         statusMessage.className = 'status-message success';
         statusMessage.textContent = 'Message sent successfully!';
         this.reset();
         
     } catch (error) {
-        // Error
         statusMessage.className = 'status-message error';
         statusMessage.textContent = 'Failed to send message. Please try again.';
         console.error('EmailJS error:', error);
@@ -292,7 +254,6 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     }
 });
 
-// Update the validateEmail function to specifically check for Gmail addresses
 function validateEmail(email) {
     if (!email) {
         return 'Email is required';
@@ -303,7 +264,6 @@ function validateEmail(email) {
     return null;
 }
 
-// Add input validation listeners to clear errors on input
 function setupInputValidation(popup) {
     const inputs = popup.querySelectorAll('input, textarea');
     inputs.forEach(input => {
@@ -313,7 +273,6 @@ function setupInputValidation(popup) {
     });
 }
 
-// Add the showAdminPanel function
 function showAdminPanel() {
     const adminPanel = document.createElement('div');
     adminPanel.className = 'admin-popup';
@@ -343,17 +302,14 @@ function showAdminPanel() {
     
     document.body.appendChild(adminPanel);
     
-    // Add transition class after a small delay
     setTimeout(() => adminPanel.classList.add('show'), 10);
     
-    // Setup close functionality
     const closeBtn = adminPanel.querySelector('.close-popup');
     closeBtn.addEventListener('click', () => {
         adminPanel.classList.remove('show');
         setTimeout(() => document.body.removeChild(adminPanel), 300);
     });
     
-    // Close on outside click
     adminPanel.addEventListener('click', (e) => {
         if (e.target === adminPanel) {
             adminPanel.classList.remove('show');
@@ -361,16 +317,13 @@ function showAdminPanel() {
         }
     });
     
-    // Wait for the element to be added to the DOM
     setTimeout(() => {
-        // Load and display restricted users
         loadRestrictedUsers();
     }, 0);
 }
 
-// Update the loadRestrictedUsers function
 async function loadRestrictedUsers() {
-    const userList = document.getElementById('user-list'); // Updated to use ID selector
+    const userList = document.getElementById('user-list');
     if (!userList) {
         console.error('User list element not found');
         return;
@@ -390,7 +343,6 @@ async function loadRestrictedUsers() {
         const snapshot = await restrictionsRef.once('value');
         const restrictions = snapshot.val();
         
-        // Handle empty or non-existent data
         if (!restrictions) {
             userList.innerHTML = '<p>No restricted users found.</p>';
             return;
@@ -424,7 +376,6 @@ async function loadRestrictedUsers() {
             </div>
         `).join('');
         
-        // Add event listeners to buttons
         document.querySelectorAll('.unrestrict-btn').forEach(btn => {
             btn.addEventListener('click', () => showUnrestrictConfirmation(btn.dataset.key));
         });
@@ -439,7 +390,6 @@ async function loadRestrictedUsers() {
             userList.innerHTML = '<p>You do not have permission to view restricted users.</p>';
         }
         
-        // If unauthorized, remove admin features
         const adminButton = document.querySelector('.admin-panel-button');
         const restrictButton = document.querySelector('.restrict-users-btn');
         if (adminButton) adminButton.remove();
@@ -447,7 +397,6 @@ async function loadRestrictedUsers() {
     }
 }
 
-// Add function to show unrestrict confirmation
 function showUnrestrictConfirmation(restrictionKey) {
     const confirmDialog = document.createElement('div');
     confirmDialog.className = 'confirm-dialog';
@@ -464,7 +413,6 @@ function showUnrestrictConfirmation(restrictionKey) {
 
     document.body.appendChild(confirmDialog);
 
-    // Add event listeners
     const cancelBtn = confirmDialog.querySelector('.cancel-btn');
     const confirmBtn = confirmDialog.querySelector('.confirm-btn');
 
@@ -478,7 +426,6 @@ function showUnrestrictConfirmation(restrictionKey) {
     });
 }
 
-// Update the unrestrictUser function
 async function unrestrictUser(restrictionKey) {
     try {
         const hasAccess = await checkDatabaseAccess('userRestrictions');
@@ -486,7 +433,6 @@ async function unrestrictUser(restrictionKey) {
             throw new Error('Unauthorized access');
         }
 
-        // Get the restriction data before removing it
         const restrictionRef = database.ref(`userRestrictions/${restrictionKey}`);
         const snapshot = await restrictionRef.once('value');
         const restrictionData = snapshot.val();
@@ -495,7 +441,6 @@ async function unrestrictUser(restrictionKey) {
             throw new Error('Restriction not found');
         }
 
-        // Save to restriction history
         const historyData = {
             ...restrictionData,
             unrestrictedAt: Date.now(),
@@ -503,12 +448,11 @@ async function unrestrictUser(restrictionKey) {
             action: 'unrestricted'
         };
 
-        // Use transaction to ensure atomic operations
         await database.ref('restrictionHistory').push(historyData);
         await restrictionRef.remove();
 
         showNotification('User has been unrestricted', 'success');
-        loadRestrictedUsers(); // Reload the list
+        loadRestrictedUsers();
 
     } catch (error) {
         console.error('Error unrestricting user:', error);
@@ -516,7 +460,6 @@ async function unrestrictUser(restrictionKey) {
     }
 }
 
-// Update the viewRestrictionHistory function
 async function viewRestrictionHistory(email) {
     try {
         const hasAccess = await checkDatabaseAccess('restrictionHistory');
@@ -541,8 +484,8 @@ async function viewRestrictionHistory(email) {
                 </div>
                 <div class="history-list">
                     ${history ? Object.entries(history)
-                        .sort((a, b) => b[1].timestamp - a[1].timestamp) // Sort by newest first
-                        .slice(0, 4) // Limit to 4 records
+                        .sort((a, b) => b[1].timestamp - a[1].timestamp)
+                        .slice(0, 4)
                         .map(([key, entry]) => `
                             <div class="history-item">
                                 <div class="history-action">${entry.action || 'Restricted'}</div>
@@ -563,7 +506,6 @@ async function viewRestrictionHistory(email) {
 
         document.body.appendChild(historyDialog);
 
-        // Add close button functionality
         const closeBtn = historyDialog.querySelector('.close-btn');
         closeBtn.addEventListener('click', () => {
             document.body.removeChild(historyDialog);
@@ -575,7 +517,6 @@ async function viewRestrictionHistory(email) {
     }
 }
 
-// Add these validation functions
 function validateName(name) {
     if (!name) {
         return 'Name is required';
@@ -596,11 +537,9 @@ function validateMessage(message) {
     return null;
 }
 
-// Update the checkAndShowRestriction function
 async function checkAndShowRestriction() {
     const user = auth.currentUser;
     if (!user) {
-        console.log('No user logged in');
         return;
     }
 
@@ -608,7 +547,6 @@ async function checkAndShowRestriction() {
         console.log('Checking restrictions for:', user.email);
         const restrictionsRef = database.ref('userRestrictions');
         
-        // Add error handling for the query
         try {
             const snapshot = await restrictionsRef.orderByChild('email').equalTo(user.email).once('value');
             const restrictions = snapshot.val();
@@ -624,7 +562,6 @@ async function checkAndShowRestriction() {
                     return;
                 }
 
-                // Create overlay
                 const overlay = document.createElement('div');
                 overlay.className = 'contact-form-overlay';
                 
@@ -644,15 +581,12 @@ async function checkAndShowRestriction() {
                     </div>
                 `;
 
-                // Set container position to relative if not already
                 if (getComputedStyle(contactContainer).position === 'static') {
                     contactContainer.style.position = 'relative';
                 }
 
-                // Add overlay to container
                 contactContainer.appendChild(overlay);
 
-                // Disable all form inputs
                 const inputs = contactForm.querySelectorAll('input, textarea, button');
                 inputs.forEach(input => {
                     input.disabled = true;

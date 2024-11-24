@@ -1,6 +1,8 @@
 import { auth, database } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Remove or comment out this event listener since it conflicts with auth-session.js
+    /*
     const googleSignInBtn = document.getElementById('google-signin');
     
     if (googleSignInBtn) {
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    */
 
     // Listen for auth state changes
     auth.onAuthStateChanged((user) => {

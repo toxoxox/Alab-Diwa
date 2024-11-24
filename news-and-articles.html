@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News and Articles - Alab Diwa</title>
-    <link rel="icon" type="image/x-icon" href="../Images Folder/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico" />
     <link rel="stylesheet" href="CSS Folder/news-and-articles.css" />
     <link rel="stylesheet" href="CSS Folder/auth.css" />
     <link
@@ -13,6 +13,26 @@
     />
   </head>
   <body class="news-articles-page">
+    <!-- Loading Screen -->
+    <div id="loader-wrapper">
+      <div class="loader-content">
+        <div class="cube-wrapper">
+          <div class="cube">
+            <div class="cube__face cube__face--front">A</div>
+            <div class="cube__face cube__face--back">D</div>
+            <div class="cube__face cube__face--right">L</div>
+            <div class="cube__face cube__face--left">B</div>
+            <div class="cube__face cube__face--top">A</div>
+            <div class="cube__face cube__face--bottom">W</div>
+          </div>
+        </div>
+        <div class="title"><span>ALAB</span> <span>DIWA</span></div>
+        <div class="line"></div>
+        <div class="subtitle">MADE BY EARL</div>
+      </div>
+    </div>
+    <!-- Rest of the content -->
+
     <!-- Navigation section -->
     <nav>
       <div class="nav__content">
@@ -53,7 +73,9 @@
             />
             <span class="auth-text">Sign in</span>
           </button>
-          <div class="profile-dropdown" style="display: none">
+          <div class="profile-dropdown">
+            <!-- Add welcome text container -->
+            <div class="welcome-text">Hi, <span id="nav-user-name"></span></div>
             <button
               id="profile-button"
               class="profile-button"
@@ -84,6 +106,21 @@
         </div>
       </div>
     </nav>
+
+    <!-- Add theme container after nav -->
+    <div class="theme-container">
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg
+          class="sun-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
+          />
+        </svg>
+      </button>
+    </div>
 
     <!-- Main content for News and Articles page -->
     <main class="news-articles-container">
@@ -121,16 +158,21 @@
               <!-- Comment Form -->
               <div class="comment-form">
                 <h3 class="comment-form__title">Leave a Comment</h3>
-                <textarea
-                  class="comment-input"
-                  placeholder="Write your comment..."
-                  aria-label="Write your comment"
-                  disabled
-                ></textarea>
-                <button class="comment-submit" disabled>Post Comment</button>
+                <div class="comment-input-container">
+                  <textarea
+                    class="comment-input"
+                    placeholder="Write your comment..."
+                    aria-label="Write your comment"
+                    disabled
+                  ></textarea>
+                  <button class="comment-submit-arrow" aria-label="Post comment" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                  </button>
+                </div>
                 <p class="comment-login-message">
-                  Please <button class="login-prompt">sign in</button> to leave
-                  a comment.
+                  Please <button class="login-prompt">sign in</button> to leave a comment.
                 </p>
               </div>
             </section>
@@ -225,14 +267,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <!-- Your Module Scripts -->
-    <script
-      type="module"
-      src="JavaScript Folder/newsArticlesData.js"
-    ></script>
-    <script
-      type="module"
-      src="JavaScript Folder/firebase-config.js"
-    ></script>
+    <script type="module" src="JavaScript Folder/newsArticlesData.js"></script>
+    <script type="module" src="JavaScript Folder/firebase-config.js"></script>
     <script type="module" src="JavaScript Folder/auth-session.js"></script>
     <script
       type="module"
@@ -245,12 +281,10 @@
     <script src="JavaScript Folder/search.js"></script>
 
     <!-- Add this after your other module scripts -->
-    <script
-      type="module"
-      src="JavaScript Folder/admin-claim-setup.js"
-    ></script>
+    <script type="module" src="JavaScript Folder/admin-claim-setup.js"></script>
 
     <!-- Add this before the closing body tag -->
     <script src="JavaScript Folder/dropdown.js"></script>
+    <script src="JavaScript Folder/theme.js"></script>
   </body>
 </html>

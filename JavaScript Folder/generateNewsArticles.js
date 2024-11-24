@@ -78,18 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Comment Form -->
                     <div class="comment-form">
                         <h3 class="comment-form__title">Leave a Comment</h3>
-                        <textarea 
-                            class="comment-input" 
-                            placeholder="Write your comment..." 
-                            aria-label="Write your comment"
-                            disabled
-                        ></textarea>
-                        <button 
-                            class="comment-submit" 
-                            disabled
-                        >
-                            Post Comment
-                        </button>
+                        <div class="comment-input-container">
+                            <textarea 
+                                class="comment-input" 
+                                placeholder="Write your comment..." 
+                                aria-label="Write your comment"
+                                disabled
+                            ></textarea>
+                            <button class="comment-submit-arrow" aria-label="Post comment" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                            </button>
+                        </div>
                         <p class="comment-login-message">
                             Please <button class="login-prompt">sign in</button> to leave a comment.
                         </p>
@@ -391,79 +392,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const handleCommentSubmit = async (event, articleId, commentInput) => {
+        event.preventDefault();
+        const comment = commentInput.value.trim();
+        if (!comment) return;
+
+        try {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            // Get the article element from the comment input
+            const articleElement = commentInput.closest('article');
+            
+            const commentRef = database.ref(`comments/${articleId}`).push();
+            await commentRef.set({
+                text: comment,
+                userId: user.uid,
+                userName: user.displayName,
+                userPhoto: user.photoURL,
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                isDeleted: false
+            });
+
+            commentInput.value = '';
+            // Pass both articleId and articleElement
+            await loadComments(articleId, articleElement);
+        } catch (error) {
+            console.error('Error posting comment:', error);
+        }
+    };
+
     function setupCommentForm(articleElement, articleId) {
-        const commentForm = articleElement.querySelector('.comment-form');
-        const commentInput = commentForm.querySelector('.comment-input');
-        const submitButton = commentForm.querySelector('.comment-submit');
-        const loginMessage = commentForm.querySelector('.comment-login-message');
-        const loginPrompt = commentForm.querySelector('.login-prompt');
+        const commentInput = articleElement.querySelector('.comment-input');
+        const submitButton = articleElement.querySelector('.comment-submit-arrow');
+        const loginMessage = articleElement.querySelector('.comment-login-message');
 
-        // Remove existing event listeners
-        const newSubmitButton = submitButton.cloneNode(true);
-        submitButton.parentNode.replaceChild(newSubmitButton, submitButton);
-        
-        const newLoginPrompt = loginPrompt.cloneNode(true);
-        loginPrompt.parentNode.replaceChild(newLoginPrompt, loginPrompt);
+        const updateFormState = (user) => {
+            const isSignedIn = !!user;
+            commentInput.disabled = !isSignedIn;
+            submitButton.disabled = !isSignedIn;
+            loginMessage.style.display = isSignedIn ? 'none' : 'block';
+        };
 
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                commentInput.disabled = false;
-                newSubmitButton.disabled = false;
-                loginMessage.style.display = 'none';
-            } else {
-                commentInput.disabled = true;
-                newSubmitButton.disabled = true;
-                loginMessage.style.display = 'block';
+        // Handle enter key press
+        commentInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                handleCommentSubmit(event, articleId, commentInput);
             }
         });
 
-        // Add submit handler for comments
-        newSubmitButton.addEventListener('click', async () => {
-            const comment = commentInput.value.trim();
-            if (comment) {
-                const user = auth.currentUser;
-                if (user) {
-                    const newComment = {
-                        text: comment,
-                        userId: user.uid,
-                        userName: user.displayName,
-                        userPhoto: user.photoURL,
-                        timestamp: Date.now()
-                    };
-
-                    // Save comment to Firebase
-                    try {
-                        await database.ref(`comments/${articleId}`).push(newComment);
-                        commentInput.value = ''; // Clear input after successful save
-                    } catch (error) {
-                        console.error('Error saving comment:', error);
-                        alert('Failed to save comment. Please try again.');
-                    }
-                }
-            }
+        // Handle arrow button click
+        submitButton.addEventListener('click', (event) => {
+            handleCommentSubmit(event, articleId, commentInput);
         });
 
-        // Add click handler for login prompt
-        newLoginPrompt.addEventListener('click', async () => {
-            try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                // First try popup
-                try {
-                    await auth.signInWithPopup(provider);
-                } catch (popupError) {
-                    // If popup is blocked, try redirect method
-                    if (popupError.code === 'auth/popup-blocked') {
-                        console.log('Popup was blocked, trying redirect...');
-                        await auth.signInWithRedirect(provider);
-                    } else {
-                        throw popupError;
-                    }
-                }
-            } catch (error) {
-                console.error('Error signing in:', error);
-                alert('Failed to sign in. Please try again or check your popup blocker settings.');
-            }
-        });
+        // Update form state based on auth
+        auth.onAuthStateChanged(updateFormState);
     }
 
     function filterArticles(category) {

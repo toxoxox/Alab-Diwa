@@ -1,1668 +1,2401 @@
-/* Reset and base styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Add the same variables at the top of the file */
+:root {
+  /* Light theme */
+  --bg-color: #f8f8ff;
+  --text-color: #333333;
+  --nav-bg: #f8f8ff;
+  --card-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border-color: #eee;
+  --heading-color: #e53e3e;
+  --text-secondary: #666666;
+  --card-hover: #f5f5f5;
+  --footer-bg: #f8f8ff;
+  --footer-text: #333;
+  --link-color: #e53e3e;
+  --button-bg: #e53e3e;
+  --button-text: #ffffff;
+  --button-hover: #c53030;
+  --input-bg: #ffffff;
+  --input-border: #ddd;
+  --dropdown-bg: #ffffff;
+  --dropdown-hover: #f5f5f5;
 }
 
+[data-theme="dark"] {
+  /* Dark theme */
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --nav-bg: #1a1a1a;
+  --card-bg: #242424;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --border-color: #333;
+  --heading-color: #ff6b6b;
+  --text-secondary: #a0a0a0;
+  --card-hover: #2a2a2a;
+  --footer-bg: #1a1a1a;
+  --footer-text: #ffffff;
+  --link-color: #ff6b6b;
+  --button-bg: #ff6b6b;
+  --button-text: #121212;
+  --button-hover: #ff8787;
+  --input-bg: #333;
+  --input-border: #404040;
+  --dropdown-bg: #242424;
+  --dropdown-hover: #2a2a2a;
+}
+
+/* Update existing styles to use variables */
 body {
-    background-color: #F8F8FF;
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav {
+  background-color: var(--nav-bg);
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: background-color 0.3s ease;
+}
+
+.news-article-card {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-article-content {
+  background-color: var(--card-bg);
+  transition: background-color 0.3s ease;
+}
+
+.news-article-title {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.news-article-description {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.category-button {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--link-color);
+  border-radius: 25px;
+  background: var(--card-bg);
+  color: var(--link-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.category-button:hover,
+.category-button.active {
+  background: var(--link-color);
+  color: var(--button-text);
+}
+
+/* Add theme toggle styles */
+.theme-container {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 999;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border: 2px solid var(--link-color);
+  border-radius: 50%;
+  background: var(--bg-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 2px 5px var(--shadow);
+}
+
+.theme-toggle svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--link-color);
+  display: block;
+}
+
+.theme-toggle:hover {
+  background: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.theme-toggle:hover svg {
+  fill: var(--button-text);
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Mobile search overlay styles */
 .mobile-search-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 1001;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Add all the styles you provided, but update the colors to use CSS variables */
 .mobile-search-overlay.active {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .mobile-search-header {
-    height: 60px;
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    background: white;
-    border-bottom: 1px solid #eee;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 60px;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
-.mobile-search-back {
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    margin-right: 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+/* Continue adding all the styles you provided, but make sure to:
+1. Use CSS variables for colors
+2. Keep existing styles intact
+3. Add new styles at the end of the file
+4. Update any conflicting styles to work with dark mode */
 
+/* For example, update color values like this: */
 .mobile-search-back svg {
-    fill: #E53E3E;
-    width: 24px;
-    height: 24px;
-}
-
-.mobile-search-input-container {
-    flex: 1;
+  fill: var(--link-color);
+  width: 24px;
+  height: 24px;
 }
 
 .mobile-search-input {
-    width: 100%;
-    height: 40px;
-    padding: 0 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #f5f5f5;
-    transition: background 0.3s ease;
+  background: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
+}
+
+/* And so on for all the styles... */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8f8ff;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Mobile search overlay styles */
+.mobile-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-search-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-search-header {
+  height: 60px;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-search-back {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-search-back svg {
+  fill: #e53e3e;
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-search-input-container {
+  flex: 1;
+}
+
+.mobile-search-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #f5f5f5;
+  transition: background 0.3s ease;
 }
 
 .mobile-search-input:focus {
-    outline: none;
-    background: #eeeeee;
+  outline: none;
+  background: #eeeeee;
 }
 
 .mobile-search-results {
-    padding: 0;
+  padding: 0;
 }
 
 .mobile-search-result-item {
-    padding: 16px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .mobile-search-result-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .mobile-search-result-item h3 {
-    color: #333;
-    font-size: 16px;
-    margin: 0;
-    font-weight: 500;
+  color: #333;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 500;
 }
 
 .mobile-search-result-item:hover {
-    background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 
 .mobile-search-result-item:active {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 /* Keep all your existing news-articles specific styles below */
 .news-articles-container {
-    max-width: 1200px;
-    margin: 100px auto 0;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 100px auto 0;
+  padding: 0 20px;
 }
 
 .news-articles-title {
-    font-size: 2.5rem;
-    color: #E53E3E;
-    margin-bottom: 2rem;
-    text-align: center;
+  font-size: 2.5rem;
+  color: #e53e3e;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .news-articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* ... (keep all your other existing styles) ... */
 
 /* Footer styles */
 .footer {
-    background-color: #F8F8FF;
-    color: #333;
-    padding: 3rem 2rem;
-    font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 3rem 2rem;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.3s ease;
+  border-top: 1px solid var(--border-color);
+  margin-top: 4rem;
 }
 
 .footer__content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+  transition: all 0.3s ease;
 }
 
 .footer__section {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 2rem;
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 2rem;
+  background-color: var(--bg-color);
 }
 
 .footer__title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #E53E3E;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
 }
 
 .footer__description {
-    font-size: 0.9rem;
-    line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-color);
 }
 
 .footer__links {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .footer__links li {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .footer__links a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .footer__links a:hover {
-    color: #E53E3E;
+  color: var(--link-color);
 }
 
 .footer__social a {
-    display: inline-block;
+  display: inline-block;
 }
 
 .facebook-icon {
-    fill: #333;
-    transition: fill 0.3s ease;
+  fill: var(--text-color);
+  transition: fill 0.3s ease;
 }
 
 .footer__social a:hover .facebook-icon {
-    fill: #E53E3E;
+  fill: var(--link-color);
 }
 
 .footer__bottom {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #ddd;
-    font-size: 0.9rem;
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] .footer,
+[data-theme="dark"] .footer__content,
+[data-theme="dark"] .footer__section,
+[data-theme="dark"] .footer__bottom {
+  background-color: var(--bg-color);
 }
 
 /* Keep your existing news-and-articles specific styles */
 /* ... (rest of your news-and-articles.css remains the same) ... */
 
 @media screen and (min-width: 769px) {
-    .nav__content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 2rem;
-    }
+  .nav__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
 
-    .nav__right {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .nav__links {
-        position: static;
-        display: flex;
-        flex-direction: row;
-        height: auto;
-        background: none;
-        margin: 0;
-        padding: 0;
-        gap: 2rem;
-    }
-
-    .nav__links li {
-        margin: 0;
-        opacity: 1;
-        transform: none;
-    }
-
-    .nav__links li a {
-        color: #333;
-        font-size: 1rem;
-        font-weight: 500;
-    }
-
-    .nav__links li a:hover,
-    .nav__links li a.current-page {
-        color: #E53E3E;
-    }
-
-    .about-btn {
-        background-color: #E53E3E;
-        color: white;
-        padding: 0.5rem 1.25rem;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-    }
-
-    .about-btn:hover {
-        background-color: #C53030;
-    }
-
-    .burger,
-    .mobile-search-button,
-    .nav__links-header,
-    .mobile-only {
-        display: none;
-    }
-
-    .logo {
-        position: static;
-        transform: none;
-        margin-right: auto;
-    }
-}
-
-/* Add any other styles you need from styles.css while keeping all your existing styles */
-
-/* Desktop Navigation Styles (Add these without removing anything) */
-@media screen and (min-width: 769px) {
-    .nav__content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .nav__right {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav__links {
-        position: static;
-        display: flex;
-        flex-direction: row;
-        height: auto;
-        background: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .nav__links li {
-        margin-left: 20px;
-        opacity: 1;
-    }
-
-    .about-btn {
-        background-color: #E53E3E;
-        color: #F8F8FF;
-        padding: 0.75rem 1.5rem;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1.1rem;
-        transition: background-color 0.3s ease;
-        margin-left: 20px;
-    }
-
-    .about-btn:hover {
-        background-color: #C53030;
-    }
-
-    .burger,
-    .mobile-search-button {
-        display: none;
-    }
-}
-
-/* Add these styles at the very end of your existing news-and-articles.css file */
-
-/* Reset styles for nav__links on desktop */
-@media screen and (min-width: 769px) {
-    nav {
-        padding: 1.5rem 2rem;
-    }
-
-    .nav__content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        height: auto;
-        padding: 0;
-    }
-
-    .nav__right {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav__links {
-        position: static;
-        left: 0;
-        height: auto;
-        flex-direction: row;
-        background: none;
-        opacity: 1;
-        pointer-events: all;
-        transform: none;
-        width: auto;
-    }
-
-    .nav__links li {
-        opacity: 1;
-        margin: 0 0 0 20px;
-        animation: none;
-    }
-
-    .nav__links li a {
-        font-size: 1.2rem;
-    }
-
-    .about-btn {
-        display: inline-block;
-        margin-left: 20px;
-    }
-
-    .burger,
-    .mobile-search-button {
-        display: none;
-    }
-
-    .mobile-only {
-        display: none;
-    }
-}
-
-/* Add these article styles to your existing CSS file */
-
-.news-article-card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.news-article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.news-article-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.news-article-content {
-    padding: 1.5rem;
-}
-
-.news-article-category,
-.news-article-type {
-    font-size: 0.9rem;
-    color: #E53E3E;
-    margin-right: 0.5rem;
-    display: inline-block;
-}
-
-.news-article-title {
-    font-size: 1.5rem;
-    margin: 0.8rem 0;
-    color: #333;
-    font-weight: 600;
-}
-
-.news-article-meta {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 1rem;
+  .nav__right {
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
+    gap: 2rem;
+  }
 
-.news-article-date,
-.news-article-author {
-    display: inline-block;
-}
-
-.news-article-full-content {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #444;
-}
-
-.news-article-full-content p {
-    margin-bottom: 1rem;
-}
-
-/* Expanded article styles */
-.news-article-card.expanded {
-    max-width: 1000px;
-    margin: 0 auto;
-    cursor: default;
-    transform: none;
-}
-
-.news-article-card.expanded .news-article-image {
-    height: 400px;
-}
-
-.news-article-card.expanded .news-article-content {
-    padding: 2rem;
-}
-
-.news-article-card.expanded .news-article-title {
-    font-size: 2rem;
-}
-
-/* Mobile responsive styles */
-@media screen and (max-width: 768px) {
-    .news-articles-grid {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-    }
-
-    .news-article-image {
-        height: 250px;
-    }
-
-    .news-article-content {
-        padding: 1rem;
-    }
-
-    .news-article-title {
-        font-size: 1.3rem;
-    }
-
-    .news-article-card.expanded .news-article-image {
-        height: 300px;
-    }
-
-    .news-article-card.expanded .news-article-title {
-        font-size: 1.5rem;
-    }
-}
-
-/* Add these styles for the categories section */
-.categories-section {
+  .nav__links {
+    position: static;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
-}
+    flex-direction: row;
+    height: auto;
+    background: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
 
-.category-button {
-    padding: 0.5rem 1.5rem;
-    border: 2px solid #E53E3E;
-    border-radius: 25px;
-    background: transparent;
-    color: #E53E3E;
+  .nav__links li {
+    margin: 0;
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav__links li a {
+    color: var(--text-color);
     font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
-}
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
 
-.category-button:hover {
-    background-color: #E53E3E;
-    color: white;
-}
+  .nav__links li a:hover,
+  .nav__links li a.current-page {
+    color: var(--link-color);
+  }
 
-.category-button.active {
-    background-color: #E53E3E;
-    color: white;
-}
-
-@media screen and (max-width: 768px) {
-    .categories-section {
-        gap: 0.5rem;
-        margin: 1rem 0 2rem 0;
-    }
-
-    .category-button {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* Add these styles for the back button and expanded view */
-.back-to-articles {
-    display: block;
-    margin-bottom: 2rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #E53E3E;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.back-to-articles:hover {
-    background-color: #C53030;
-}
-
-.single-article-view {
-    display: block !important;
-}
-
-.news-article-card {
-    cursor: pointer;
-}
-
-.news-article-card.expanded {
-    cursor: default;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-/* Add these styles for the read more button and preview */
-.news-article-preview {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 1rem;
-}
-
-.read-more-btn {
-    background-color: #E53E3E;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-}
-
-.read-more-btn:hover {
-    background-color: #C53030;
-}
-
-.news-article-card.expanded .read-more-btn {
-    display: none;
-}
-
-/* Update the button styles */
-.join-btn {
-    background-color: #E53E3E;
+  .about-btn {
+    background-color: #e53e3e;
     color: white;
     padding: 0.5rem 1.25rem;
     border-radius: 4px;
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.3s ease;
+  }
+
+  .about-btn:hover {
+    background-color: #c53030;
+  }
+
+  .burger,
+  .mobile-search-button,
+  .nav__links-header,
+  .mobile-only {
+    display: none;
+  }
+
+  .logo {
+    position: static;
+    transform: none;
+    margin-right: auto;
+  }
+}
+
+/* Add any other styles you need from styles.css while keeping all your existing styles */
+
+/* Desktop Navigation Styles (Add these without removing anything) */
+@media screen and (min-width: 769px) {
+  .nav__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__links {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    background: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__links li {
+    margin-left: 20px;
+    opacity: 1;
+  }
+
+  .about-btn {
+    background-color: #e53e3e;
+    color: #f8f8ff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+  }
+
+  .about-btn:hover {
+    background-color: #c53030;
+  }
+
+  .burger,
+  .mobile-search-button {
+    display: none;
+  }
+}
+
+/* Add these styles at the very end of your existing news-and-articles.css file */
+
+/* Reset styles for nav__links on desktop */
+@media screen and (min-width: 769px) {
+  nav {
+    padding: 1.5rem 2rem;
+  }
+
+  .nav__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: auto;
+    padding: 0;
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__links {
+    position: static;
+    left: 0;
+    height: auto;
+    flex-direction: row;
+    background: none;
+    opacity: 1;
+    pointer-events: all;
+    transform: none;
+    width: auto;
+  }
+
+  .nav__links li {
+    opacity: 1;
+    margin: 0 0 0 20px;
+    animation: none;
+  }
+
+  .nav__links li a {
+    font-size: 1.2rem;
+  }
+
+  .about-btn {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  .burger,
+  .mobile-search-button {
+    display: none;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+}
+
+/* Add these article styles to your existing CSS file */
+
+.news-article-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.news-article-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.news-article-content {
+  padding: 1.5rem;
+}
+
+.news-article-category,
+.news-article-type {
+  font-size: 0.9rem;
+  color: #e53e3e;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.news-article-title {
+  font-size: 1.5rem;
+  margin: 0.8rem 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.news-article-meta {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.news-article-date,
+.news-article-author {
+  display: inline-block;
+}
+
+.news-article-full-content {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.news-article-full-content p {
+  margin-bottom: 1rem;
+}
+
+/* Expanded article styles */
+.news-article-card.expanded {
+  max-width: 1000px;
+  margin: 0 auto;
+  cursor: default;
+  transform: none;
+}
+
+.news-article-card.expanded .news-article-image {
+  height: 400px;
+}
+
+.news-article-card.expanded .news-article-content {
+  padding: 2rem;
+}
+
+.news-article-card.expanded .news-article-title {
+  font-size: 2rem;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+  .news-articles-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    background-color: var(--bg-color);
+  }
+
+  .news-article-card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--shadow);
+    overflow: hidden;
+  }
+
+  .news-article-content {
+    padding: 0.75rem;
+  }
+
+  .news-article-title {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-article-meta {
+    margin-bottom: 0.5rem;
+  }
+
+  .news-article-preview {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-article-image {
+    height: 220px;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    display: block;
+  }
+
+  /* Adjust comment section padding */
+  .comments-section {
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .comment-input-container {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Add styles for very small screens */
+@media screen and (max-width: 480px) {
+  .news-articles-grid {
+    gap: 15px;
+  }
+}
+
+/* Add these styles for the categories section */
+.categories-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.category-button {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #e53e3e;
+  border-radius: 25px;
+  background: transparent;
+  color: #e53e3e;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.category-button:hover {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.category-button.active {
+  background-color: #e53e3e;
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .categories-section {
+    gap: 0.5rem;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .category-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Add these styles for the back button and expanded view */
+.back-to-articles {
+  display: block;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.back-to-articles:hover {
+  background-color: #c53030;
+}
+
+.single-article-view {
+  display: block !important;
+}
+
+.news-article-card {
+  cursor: pointer;
+}
+
+.news-article-card.expanded {
+  cursor: default;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Add these styles for the read more button and preview */
+.news-article-preview {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.read-more-btn {
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background-color: #c53030;
+}
+
+.news-article-card.expanded .read-more-btn {
+  display: none;
+}
+
+/* Update the button styles */
+.join-btn {
+  background-color: #e53e3e;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
 .join-btn:hover {
-    background-color: #C53030;
+  background-color: #c53030;
 }
 
 @media screen and (min-width: 769px) {
-    /* Update desktop navigation styles */
-    .nav__content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0;
-    }
+  /* Update desktop navigation styles */
+  .nav__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+  }
 
-    .nav__right {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
 
-    .nav__links {
-        position: static;
-        display: flex;
-        flex-direction: row;
-        height: auto;
-        background: none;
-        margin: 0;
-        padding: 0;
-        gap: 2rem;
-    }
+  .nav__links {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    background: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
 
-    .nav__links li {
-        margin: 0;
-        opacity: 1;
-        transform: none;
-    }
+  .nav__links li {
+    margin: 0;
+    opacity: 1;
+    transform: none;
+  }
 
-    .nav__links li a {
-        color: #333;
-        font-size: 1rem;
-        font-weight: 500;
-    }
+  .nav__links li a {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
 
-    .nav__links li a:hover,
-    .nav__links li a.current-page {
-        color: #E53E3E;
-    }
+  .nav__links li a:hover,
+  .nav__links li a.current-page {
+    color: var(--link-color);
+  }
 
-    .join-btn {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
+  .join-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
 
-    .burger,
-    .mobile-search-button,
-    .nav__links-header,
-    .mobile-only {
-        display: none;
-    }
+  .burger,
+  .mobile-search-button,
+  .nav__links-header,
+  .mobile-only {
+    display: none;
+  }
 }
 
 /* Add these styles for the comments section */
 .news-article {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #eee;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
 }
 
 .comments-section {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
 }
 
 .comments-section__title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .comment {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .comment-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
 }
 
 .comment-avatar-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .comment-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 
 .comment-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .comment-author {
-    font-weight: bold;
-    color: #333;
+  font-weight: bold;
+  color: #333;
 }
 
 .comment-date {
-    font-size: 0.875rem;
-    color: #6c757d;
+  font-size: 0.875rem;
+  color: #6c757d;
 }
 
 .admin-comment-actions {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .comment-content {
-    margin-left: calc(32px + 0.5rem);
-    color: #4a5568;
-    line-height: 1.5;
+  margin-left: calc(32px + 0.5rem);
+  color: #4a5568;
+  line-height: 1.5;
 }
 
 /* Update the createCommentElement function's template */
 
 .admin-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
 }
 
 .delete-article-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .delete-article-btn:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
 .news-article-card {
-    position: relative;
+  position: relative;
 }
 
 /* Admin comment controls */
 .admin-comment-actions {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .admin-delete-comment,
 .admin-restore-comment {
-    background: none;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
 .admin-delete-comment:hover,
 .admin-restore-comment:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .admin-delete-comment svg {
-    fill: #dc3545;
+  fill: #dc3545;
 }
 
 .admin-restore-comment svg {
-    fill: #28a745;
+  fill: #28a745;
 }
 
 .comment-deleted {
-    color: #6c757d;
-    font-style: italic;
+  color: #6c757d;
+  font-style: italic;
 }
 
 .comment-deleted-badge {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-left: 0.5rem;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
 }
 
 /* Modal styles */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
 }
 
 .modal-overlay.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 400px;
-    width: 90%;
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
 }
 
 .modal-overlay.active .modal-content {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .modal-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
 .modal-message {
-    margin-bottom: 1.5rem;
-    color: #666;
+  margin-bottom: 1.5rem;
+  color: #666;
 }
 
 .modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .modal-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
 .modal-button.cancel {
-    background-color: #6c757d;
-    color: white;
+  background-color: #6c757d;
+  color: white;
 }
 
 .modal-button.confirm {
-    background-color: #dc3545;
-    color: white;
+  background-color: #dc3545;
+  color: white;
 }
 
 /* Add this style for restore confirmation button */
 .modal-button.confirm[data-action="restore"] {
-    background-color: #28a745;  /* Green color for restore */
+  background-color: #28a745; /* Green color for restore */
 }
 
 .modal-button:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 /* Add these styles for deleted comment messages */
 .deleted-message {
-    display: block;
-    padding: 0.5rem;
-    border-radius: 4px;
-    font-style: italic;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-style: italic;
 }
 
 .deleted-message.personal {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }
 
 .deleted-message.admin {
-    color: #6c757d;
-    text-decoration: line-through;
+  color: #6c757d;
+  text-decoration: line-through;
 }
 
 .deleted-indicator {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .comment-content.comment-deleted {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 /* Add these styles for the profile dropdown */
 .profile-dropdown {
-    position: relative;
-    display: none;
+  position: relative;
+  display: none;
 }
 
 .profile-button {
-    background: none;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.3s ease;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
 }
 
 .profile-button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .profile-picture {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    display: none;
-    z-index: 1000;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  display: none;
+  z-index: 1000;
 }
 
 .dropdown-menu.show {
-    display: block;
+  display: block;
 }
 
 .dropdown-header {
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .dropdown-profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .dropdown-user-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 #dropdown-name {
-    font-weight: 600;
-    color: #333;
+  font-weight: 600;
+  color: #333;
 }
 
 #dropdown-email {
-    font-size: 0.875rem;
-    color: #666;
+  font-size: 0.875rem;
+  color: #666;
 }
 
 .dropdown-divider {
-    height: 1px;
-    background-color: #eee;
-    margin: 0.5rem 0;
+  height: 1px;
+  background-color: #eee;
+  margin: 0.5rem 0;
 }
 
 .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    background: none;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 /* Admin badge styles */
 .admin-badge {
-    display: inline-block;
-    background-color: #dc3545;
-    color: white;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    margin-left: 0.5rem;
+  display: inline-block;
+  background-color: #dc3545;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
 }
 
 /* Admin action info styles */
 .admin-action-info {
-    font-size: 0.75rem;
-    padding: 0.25rem 0;
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    opacity: 0.7;
+  font-size: 0.75rem;
+  padding: 0.25rem 0;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  opacity: 0.7;
 }
 
 .admin-action-info.deleted {
-    color: #dc3545;
+  color: #dc3545;
 }
 
 .admin-action-info.restored {
-    color: #28a745;
+  color: #28a745;
 }
 
 .admin-action-info svg {
-    fill: currentColor;
+  fill: currentColor;
 }
 
 .admin-permanent-delete-comment {
-    background: none;
-    border: none;
-    padding: 4px 8px;
-    cursor: pointer;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: #dc3545;
-    font-size: 0.75rem;
-    transition: all 0.2s ease;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #dc3545;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
 }
 
 .admin-permanent-delete-comment:hover {
-    background-color: rgba(220, 53, 69, 0.1);
+  background-color: rgba(220, 53, 69, 0.1);
 }
 
 .admin-permanent-delete-comment svg {
-    fill: currentColor;
+  fill: currentColor;
 }
 
 /* Update modal styles for permanent delete */
 .modal-button.confirm[data-action="permanent-delete"] {
-    background-color: #dc3545;
-    color: white;
-    font-weight: bold;
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
 }
 
 .modal-button.confirm[data-action="permanent-delete"]:hover {
-    background-color: #bd2130;
+  background-color: #bd2130;
 }
 
 /* Update mobile navigation styles */
 @media screen and (max-width: 768px) {
-    .nav__content {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        padding: 0 0.5rem;
-    }
+  .nav__content {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
 
-    .nav__right {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
+  .nav__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
-    .auth-button .auth-text {
-        display: none;
-    }
+  .auth-button .auth-text {
+    display: none;
+  }
 
-    .auth-button {
-        padding: 0.5rem;
-    }
+  .auth-button {
+    padding: 0.5rem;
+  }
 
-    .auth-container {
-        margin-right: 0.5rem;
-    }
+  .auth-container {
+    margin-right: 0.5rem;
+  }
 
-    .profile-button {
-        width: 32px;
-        height: 32px;
-    }
+  .profile-button {
+    width: 32px;
+    height: 32px;
+  }
 
-    .profile-picture {
-        width: 100%;
-        height: 100%;
-    }
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* Navigation Bar Styles */
 nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #F8F8FF;
-    padding: 1.5rem 2rem;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 90px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--nav-bg);
+  padding: 1.5rem 2rem;
+  z-index: 1100;
+  box-shadow: 0 4px 6px var(--shadow);
+  height: 100px;
 }
 
 .nav__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
 }
 
 .logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #E53E3E;
-    text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #e53e3e;
+  text-decoration: none;
 }
 
 .nav__links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav__links li a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .nav__links li a:hover,
 .nav__links li a.active {
-    color: #E53E3E;
+  color: var(--link-color);
 }
 
 .auth-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Mobile styles */
 @media screen and (max-width: 768px) {
-    nav {
-        padding: 0;
-        height: 60px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        box-sizing: border-box;
-    }
+  nav {
+    padding: 1rem;
+    height: 80px;
+  }
 
-    .nav__content {
-        display: grid;
-        grid-template-columns: 40px 1fr 40px;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 1rem;
-        height: 100%;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
+  .nav__content {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    height: 100%;
+  }
 
-    /* Burger menu */
-    .burger {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        grid-column: 1;
-        width: 28px;
-        height: 28px;
-        margin: 0;
-        padding: 0;
-        z-index: 1006;
-        cursor: pointer;
-        background: transparent;
-        border: none;
-        margin-left: -0.5rem; /* Pull slightly to the left */
-    }
+  /* Center logo */
+  .logo {
+    grid-column: 2;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
 
-    .burger-icon {
-        width: 20px;
-        height: 16px;
-        position: relative;
-    }
+  /* Auth container on the right */
+  .auth-container {
+    grid-column: 3;
+    justify-self: end;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
 
-    .burger-icon span {
-        display: block;
-        position: absolute;
-        height: 2px;
-        width: 100%;
-        background: #E53E3E;
-        border-radius: 3px;
-        opacity: 1;
-        left: 0;
-        transform: rotate(0deg);
-        transition: .25s ease-in-out;
-    }
+  /* Hide auth button text on mobile */
+  .auth-button .auth-text {
+    display: none;
+  }
 
-    .burger-icon span:nth-child(1) { top: 0; }
-    .burger-icon span:nth-child(2) { top: 7px; }
-    .burger-icon span:nth-child(3) { top: 14px; }
+  /* Adjust auth button size */
+  .auth-button {
+    padding: 0.25rem;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
 
-    /* Logo */
-    .logo {
-        grid-column: 2;
-        text-align: center;
-        font-size: 1.2rem;
-        margin: 0;
-        padding: 0;
-        white-space: nowrap;
-        justify-self: center;
-    }
+  .auth-button .google-icon {
+    width: 16px;
+    height: 16px;
+  }
 
-    /* Auth container */
-    .auth-container {
-        grid-column: 3;
-        justify-self: end;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        z-index: 1004;
-        margin-right: -0.5rem; /* Pull slightly to the right */
-    }
+  /* Hide profile dropdown when not signed in */
+  .profile-dropdown:not(.show) {
+    display: none !important;
+  }
+
+  /* Hide welcome text on mobile */
+  .welcome-text {
+    display: none !important;
+  }
+
+  /* Show auth button properly */
+  .auth-button {
+    display: flex !important;
+  }
 }
 
 /* Desktop styles */
 @media screen and (min-width: 769px) {
-    .burger {
-        display: none;
-    }
+  .burger {
+    display: none;
+  }
 
-    .nav__content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 2rem;
-    }
-
-    /* Logo on the left */
-    .logo {
-        margin-right: 2rem;
-    }
-
-    /* Nav links in the middle */
-    .nav__right {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        gap: 2rem;
-        order: 2;
-    }
-
-    .nav__links {
-        display: flex;
-        gap: 2rem;
-        margin: 0;
-        padding: 0;
-        order: 1;
-    }
-
-    /* Auth container on the far right */
-    .auth-container {
-        margin-left: 2rem;
-        order: 2;
-    }
-}
-
-/* Font declarations */
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../Fonts Folder/Montserrat/Montserrat-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../Fonts Folder/Montserrat/Montserrat-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../Fonts Folder/Montserrat/Montserrat-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Navigation Bar Styles */
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #F8F8FF;
-    padding: 1.5rem 2rem;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 90px;
-}
-
-.nav__content {
+  .nav__content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 100%;
-}
+    padding: 0 2rem;
+  }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #E53E3E;
-    text-decoration: none;
-}
+  /* Logo on the left */
+  .logo {
+    margin-right: 2rem;
+  }
 
-.nav__right {
+  /* Nav links in the middle */
+  .nav__right {
     display: flex;
     align-items: center;
+    margin-left: auto;
     gap: 2rem;
-}
+    order: 2;
+  }
 
-.nav__links {
+  .nav__links {
     display: flex;
     gap: 2rem;
-    list-style: none;
     margin: 0;
     padding: 0;
-}
+    order: 1;
+  }
 
-.nav__links li a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav__links li a:hover,
-.nav__links li a.active {
-    color: #E53E3E;
-}
-
-.auth-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.nav-auth {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-left: auto;
-}
-
-.auth-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: white;
-    border: 2px solid #E53E3E;
-    border-radius: 4px;
-    color: #E53E3E;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.auth-button:hover {
-    background: #E53E3E;
-    color: white;
-}
-
-.auth-button .google-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.profile-dropdown {
-    display: none;
-    position: relative;
-    z-index: 1004;
-}
-
-.profile-button {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: 2px solid #E53E3E;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1004;
-}
-
-.profile-picture {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.dropdown-profile-picture {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Burger Menu Styles */
-.burger {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 20px;
-    position: relative;
-}
-
-.burger-icon {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.burger-icon span {
-    display: block;
-    position: absolute;
-    height: 3px;
-    width: 100%;
-    background: #E53E3E;
-    border-radius: 3px;
-    opacity: 1;
-    left: 0;
-    transform: rotate(0deg);
-    transition: .25s ease-in-out;
-}
-
-.burger-icon span:nth-child(1) { top: 0; }
-.burger-icon span:nth-child(2) { top: 8px; }
-.burger-icon span:nth-child(3) { top: 16px; }
-
-.burger.active .burger-icon span:nth-child(1) {
-    top: 8px;
-    transform: rotate(135deg);
-}
-
-.burger.active .burger-icon span:nth-child(2) {
-    opacity: 0;
-    left: -60px;
-}
-
-.burger.active .burger-icon span:nth-child(3) {
-    top: 8px;
-    transform: rotate(-135deg);
-}
-
-/* Mobile Navigation Styles */
-@media screen and (max-width: 768px) {
-    nav {
-        padding: 1rem;
-    }
-
-    .nav__content {
-        padding: 0 1rem;
-        max-width: 100%;
-    }
-
-    .burger {
-        display: block;
-        z-index: 1003;
-    }
-
-    .nav__links {
-        position: fixed;
-        top: -200px;
-        left: -100%;
-        width: 100%;
-        height: 100vh;
-        background: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: left 0.3s ease;
-        z-index: 1002;
-        
-    }
-
-    .nav__links.show {
-        left: 0;
-    }
-
-    .nav__links li {
-        width: 100%;
-        text-align: center;
-        margin: 0.5rem 0;
-        opacity: 1;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .nav__links li a {
-        display: block;
-        padding: 1rem;
-        font-size: 1.2rem;
-        color: #000000;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-}
-
-/* Desktop Navigation Styles */
-@media screen and (min-width: 769px) {
-    .burger {
-        display: none;
-    }
-
-    .nav__right {
-        display: flex;
-    }
-
-    .nav__links {
-        position: static;
-        flex-direction: row;
-        height: auto;
-        background: none;
-        width: auto;
-        gap: 2.5rem;
-    }
+  /* Auth container on the far right */
+  .auth-container {
+    margin-left: 2rem;
+    order: 2;
+  }
 }
 
 /* Active Navigation Link Styles */
 .nav__links li a.active {
-    color: #E53E3E;
+  color: var(--link-color);
 }
 
 /* Add these styles for active navigation links */
 .nav__links li a {
-    position: relative;
-    color: #000000;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    padding: 0.5rem 0; /* Add horizontal padding */
+  position: relative;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.5rem 0; /* Add horizontal padding */
 }
 
 .nav__links li a.active {
-    color: #E53E3E;
+  color: var(--link-color);
 }
 
 .nav__links li a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%; /* Will match the text width due to padding */
-    height: 2px;
-    background-color: #E53E3E;
-    transform: scaleX(1);
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%; /* Will match the text width due to padding */
+  height: 2px;
+  background-color: var(--link-color);
+  transform: scaleX(1);
 }
 
 .nav__links li a:hover {
-    color: #E53E3E;
+  color: var(--link-color);
 }
 
 /* Update mobile styles for active link */
 @media screen and (max-width: 768px) {
-    .nav__links li a {
-        padding: 0.5rem 1rem;
-        width: auto; /* Allow width to fit content */
-        display: inline-block; /* Change to inline-block */
-    }
+  .nav__links li a {
+    padding: 0.5rem 1rem;
+    width: auto; /* Allow width to fit content */
+    display: inline-block; /* Change to inline-block */
+  }
 
-    .nav__links li a.active::after {
-        bottom: 0;
-        width: 40px; /* Fixed width for underline */
-        left: 50%; /* Center the line */
-        transform: translateX(-50%); /* Center the line */
-    }
+  .nav__links li a.active::after {
+    bottom: 0;
+    width: 40px; /* Fixed width for underline */
+    left: 50%; /* Center the line */
+    transform: translateX(-50%); /* Center the line */
+  }
 }
 
 /* Update the comment submit button styles */
 .comment-submit {
-    background-color: #E53E3E;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
 .comment-submit:hover {
-    background-color: #C53030;
+  background-color: #c53030;
 }
 
 .comment-submit:disabled {
-    background-color: #E53E3E;
-    opacity: 0.6;
-    cursor: not-allowed;
+  background-color: #e53e3e;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Add the same theme toggle styles */
+.theme-container {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 999;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border: 2px solid var(--link-color);
+  border-radius: 50%;
+  background: var(--bg-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 2px 5px var(--shadow);
+}
+
+.theme-toggle svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--link-color);
+  display: block;
+}
+
+.theme-toggle:hover {
+  background: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.theme-toggle:hover svg {
+  fill: var(--button-text);
+}
+
+/* Update these styles */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav {
+  background-color: var(--nav-bg);
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: background-color 0.3s ease;
+}
+
+/* Remove or update the container background */
+.news-articles-container {
+  max-width: 1200px;
+  margin: 100px auto 0;
+  padding: 0 20px;
+  /* Remove the background-color property */
+}
+
+/* Update category buttons */
+.category-button {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--link-color);
+  border-radius: 25px;
+  background: var(--card-bg); /* Change to card background */
+  color: var(--link-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.category-button:hover,
+.category-button.active {
+  background: var(--link-color);
+  color: var(--button-text);
+}
+
+/* Update navigation links */
+.nav__links li a {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.nav__links li a:hover,
+.nav__links li a.active {
+  color: var(--link-color);
+}
+
+/* Update logo color */
+.logo {
+  color: var(--heading-color);
+  transition: color 0.3s ease;
+}
+
+/* Update article card styles */
+.news-article-card {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-article-content {
+  background-color: var(--card-bg);
+  transition: background-color 0.3s ease;
+}
+
+.news-article-title {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.news-article-preview {
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.news-article-description {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.news-article-meta {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.news-article-category,
+.news-article-type {
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+.news-article-date,
+.news-article-author {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+/* Update welcome text styles */
+.welcome-text {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+#nav-user-name {
+  color: var(--heading-color);
+  font-weight: 600;
+  margin-left: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+/* Update profile dropdown styles */
+.profile-dropdown {
+  display: none;
+  position: relative;
+  z-index: 1150;
+  align-items: center;
+}
+
+.profile-dropdown.show {
+  display: flex !important;
+}
+
+/* Update article content colors in dark mode */
+[data-theme="dark"] .news-article-full-content {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .news-article-full-content p {
+  color: var(--text-color);
+}
+
+/* Update comments section colors in dark mode */
+[data-theme="dark"] .comments-section {
+  background-color: var(--card-bg);
+}
+
+[data-theme="dark"] .comment {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .comment-author {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .comment-content {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .comment-date {
+  color: var(--text-secondary);
+}
+
+/* Update footer colors in dark mode */
+[data-theme="dark"] .footer {
+  background-color: var(--footer-bg);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .footer__title {
+  color: var(--heading-color);
+}
+
+[data-theme="dark"] .footer__description {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .footer__links a {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .footer__links a:hover {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .footer__social .facebook-icon {
+  fill: var(--text-color);
+}
+
+[data-theme="dark"] .footer__social a:hover .facebook-icon {
+  fill: var(--link-color);
+}
+
+[data-theme="dark"] .footer__bottom {
+  border-top-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] .footer,
+[data-theme="dark"] .footer__content,
+[data-theme="dark"] .footer__section,
+[data-theme="dark"] .footer__bottom {
+  background-color: var(--bg-color);
+}
+
+/* Update comment input styles */
+.comment-input-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 30px;
+  height: 30px;
+  padding: 6px 50px 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  resize: none;
+  font-family: inherit;
+  background: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.2;
+  font-size: 0.95rem;
+}
+
+.comment-submit-arrow {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  padding: 8px;
+  background: var(--link-color);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  height: 36px;
+  width: 36px;
+}
+
+.comment-submit-arrow svg {
+  fill: white;
+  width: 18px;
+  height: 18px;
+}
+
+/* Add at the top of the file, after the variables */
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transform: translateY(0);
+}
+
+.loader-content {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cube-wrapper {
+  perspective: 800px;
+  margin-bottom: 2rem;
+}
+
+.cube {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transform-style: preserve-3d;
+  animation: rotate 4s infinite linear;
+}
+
+.cube__face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  background: var(--heading-color);
+}
+
+.cube__face--front {
+  transform: rotateY(0deg) translateZ(50px);
+}
+.cube__face--right {
+  transform: rotateY(90deg) translateZ(50px);
+}
+.cube__face--back {
+  transform: rotateY(180deg) translateZ(50px);
+}
+.cube__face--left {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+.cube__face--top {
+  transform: rotateX(90deg) translateZ(50px);
+}
+.cube__face--bottom {
+  transform: rotateX(-90deg) translateZ(50px);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.title {
+  margin-top: 2rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards 0.5s;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards 0.3s;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+
+.line {
+  width: 0;
+  height: 2px;
+  background: var(--heading-color);
+  margin: 0.5rem 0 2rem 0;
+  animation: expandLine 0.5s ease forwards 0.5s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandLine {
+  to {
+    width: 200px;
+  }
+}
+
+/* Split text effect for title */
+.title span {
+  display: inline-block;
+  animation: splitReveal 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.title span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+@keyframes splitReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Update mobile menu styles */
+@media screen and (max-width: 768px) {
+  .nav__links {
+    position: fixed;
+    top: 0 !important;
+    left: -100%;
+    width: 100%;
+    height: 100vh !important;
+    background: var(--bg-color) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.3s ease-in-out;
+    z-index: 1002;
+    padding-top: 120px;
+    gap: 1.5rem;
+  }
+
+  .nav__links.show {
+    left: 0;
+  }
+
+  .nav__links li {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .nav__links li a {
+    display: block;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: var(--text-color) !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav__links li a:hover,
+  .nav__links li a.active {
+    color: var(--link-color) !important;
+  }
+
+  /* Show menu items when menu is open */
+  .nav__links.show li {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: calc(0.1s * var(--i));
+  }
+
+  /* Remove any potential overlays */
+  body.menu-open::after {
+    display: none;
+  }
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] .nav__links {
+  background: var(--bg-color) !important;
+}
+
+[data-theme="dark"] .nav__links li a {
+  color: white !important;
+}
+
+[data-theme="dark"] .nav__links li a:hover,
+[data-theme="dark"] .nav__links li a.active {
+  color: var(--link-color) !important;
+}
+
+[data-theme="dark"] .burger-icon span {
+  background: var(--text-color);
+}
+
+/* Update mobile menu styles */
+@media screen and (max-width: 768px) {
+  /* Remove the overlay effect */
+  body.menu-open::after {
+    display: none; /* Remove the blur overlay */
+  }
+
+  /* Update burger icon color */
+  .burger-icon span {
+    background: var(--link-color) !important; /* Force red color */
+  }
+
+  /* Keep other menu styles */
+  .nav__links {
+    position: fixed;
+    top: 0 !important;
+    left: -100%;
+    width: 100%;
+    height: 100vh !important;
+    background: var(--bg-color) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.3s ease-in-out;
+    z-index: 1002;
+    padding-top: 120px;
+    gap: 1.5rem;
+  }
+}
+
+/* Update mobile menu styles for dark mode */
+@media screen and (max-width: 768px) {
+  [data-theme="dark"] .nav__links li a {
+    color: white !important;
+  }
+
+  [data-theme="dark"] .nav__links li a:hover,
+  [data-theme="dark"] .nav__links li a.active {
+    color: var(--link-color) !important;
+  }
+
+  .nav__links {
+    position: fixed;
+    top: 0 !important;
+    left: -100%;
+    width: 100%;
+    height: 100vh !important;
+    background: var(--bg-color) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.3s ease-in-out;
+    z-index: 1002;
+    padding-top: 120px;
+    gap: 1.5rem;
+  }
+
+  .nav__links li a {
+    display: block;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: var(--text-color) !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+}
+
+/* Update dark mode styles for nav links */
+[data-theme="dark"] .nav__links li a {
+  color: white !important;
+}
+
+[data-theme="dark"] .nav__links li a:hover,
+[data-theme="dark"] .nav__links li a.active {
+  color: var(--link-color) !important;
+}
+
+/* Mobile menu specific dark mode styles */
+@media screen and (max-width: 768px) {
+  [data-theme="dark"] .nav__links {
+    background: var(--bg-color) !important;
+  }
+
+  [data-theme="dark"] .nav__links li a {
+    color: white !important;
+  }
+}
+
+/* Update burger menu animation styles */
+@media screen and (max-width: 768px) {
+  .burger-icon span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--link-color) !important;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+  }
+
+  .burger-icon span:nth-child(1) {
+    top: 0;
+  }
+  .burger-icon span:nth-child(2) {
+    top: 8px;
+  }
+  .burger-icon span:nth-child(3) {
+    top: 16px;
+  }
+
+  /* Animation for active state */
+  .burger.active .burger-icon span:nth-child(1) {
+    top: 8px;
+    transform: rotate(45deg);
+  }
+
+  .burger.active .burger-icon span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .burger.active .burger-icon span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+}
+
+/* Update burger menu styles */
+@media screen and (max-width: 768px) {
+  /* Burger menu */
+  .burger {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    grid-column: 1;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    z-index: 1006;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+  }
+
+  .burger-icon {
+    width: 20px;
+    height: 16px;
+    position: relative;
+    margin-left: 0.5rem;
+  }
+
+  .burger-icon span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--link-color) !important;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+  }
+
+  .burger-icon span:nth-child(1) {
+    top: 0;
+  }
+  .burger-icon span:nth-child(2) {
+    top: 8px;
+  }
+  .burger-icon span:nth-child(3) {
+    top: 16px;
+  }
+
+  /* Animation for active state */
+  .burger.active .burger-icon span:nth-child(1) {
+    top: 8px;
+    transform: rotate(45deg);
+  }
+
+  .burger.active .burger-icon span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .burger.active .burger-icon span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+}
+
+/* Add these styles for the login prompt */
+.comment-login-message {
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.login-prompt {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.login-prompt:hover {
+  color: var(--button-hover);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .login-prompt {
+  color: var(--link-color);
+}
+
+[data-theme="dark"] .login-prompt:hover {
+  color: var(--button-hover);
+}
+
+/* Desktop Navigation Styles */
+@media screen and (min-width: 769px) {
+    .nav__links {
+        position: static;
+        flex-direction: row;
+        height: auto;
+        background: none !important; /* Force no background */
+        width: auto;
+        gap: 2.5rem;
+    }
+
+    /* Dark mode specific styles */
+    [data-theme="dark"] .nav__links {
+        background: none !important;
+    }
+
+    [data-theme="dark"] .nav__links li a {
+        background: none !important;
+        color: white !important;
+    }
+
+    [data-theme="dark"] .nav__links li a:hover,
+    [data-theme="dark"] .nav__links li a.active {
+        color: var(--link-color) !important;
+        background: none !important;
+    }
+
+    /* Remove any background from nav links */
+    .nav__links li a {
+        background: none !important;
+    }
+
+    .nav__links li a:hover,
+    .nav__links li a.active {
+        background: none !important;
+    }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About - Alab Diwa</title>
-    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="Images Folder/favicon.ico" />
     <link rel="stylesheet" href="CSS Folder/about.css" />
     <link rel="stylesheet" href="CSS Folder/auth.css" />
     <link rel="stylesheet" href="CSS Folder/admin.css" />
@@ -13,8 +13,31 @@
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
     ></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <!-- Loading Screen -->
+    <div id="loader-wrapper">
+      <div class="loader-content">
+        <div class="cube-wrapper">
+          <div class="cube">
+            <div class="cube__face cube__face--front">A</div>
+            <div class="cube__face cube__face--back">D</div>
+            <div class="cube__face cube__face--right">L</div>
+            <div class="cube__face cube__face--left">B</div>
+            <div class="cube__face cube__face--top">A</div>
+            <div class="cube__face cube__face--bottom">W</div>
+          </div>
+        </div>
+        <div class="title"><span>ALAB</span> <span>DIWA</span></div>
+        <div class="line"></div>
+        <div class="subtitle">MADE BY EARL</div>
+      </div>
+    </div>
+    <!-- Rest of the content -->
     <!-- Navigation section -->
     <nav>
       <div class="nav__content">
@@ -39,72 +62,143 @@
           <li><a href="news-and-articles.html">News & Articles</a></li>
         </ul>
 
-        <!-- Auth container on the right -->
+        <!-- Auth container -->
         <div class="auth-container">
-          <button id="google-signin" class="auth-button" aria-label="Sign in with Google">
-            <img src="Images Folder/google-icon.svg" alt="" class="google-icon"/>
+          <button
+            id="google-signin"
+            class="auth-button"
+            aria-label="Sign in with Google"
+          >
+            <img
+              src="Images Folder/google-icon.svg"
+              alt=""
+              class="google-icon"
+            />
             <span class="auth-text">Sign in</span>
           </button>
           <div class="profile-dropdown">
-            <button id="profile-button" class="profile-button" aria-label="Profile menu" aria-expanded="false">
-              <img id="profile-picture" src="" alt="" class="profile-picture"/>
+            <div class="welcome-text">Hi, <span id="nav-user-name"></span></div>
+            <button
+              id="profile-button"
+              class="profile-button"
+              aria-label="Profile menu"
+              aria-expanded="false"
+            >
+              <img id="profile-picture" src="" alt="" class="profile-picture" />
             </button>
             <div class="dropdown-menu" id="dropdown-menu">
               <div class="dropdown-header">
-                <img id="dropdown-profile-picture" src="" alt="" class="dropdown-profile-picture"/>
+                <img
+                  id="dropdown-profile-picture"
+                  src=""
+                  alt=""
+                  class="dropdown-profile-picture"
+                />
                 <div class="dropdown-user-info">
                   <span id="dropdown-name"></span>
                   <span id="dropdown-email"></span>
                 </div>
               </div>
               <div class="dropdown-divider"></div>
-              <button id="google-signout" class="dropdown-item">Sign out</button>
+              <button id="google-signout" class="dropdown-item">
+                Sign out
+              </button>
             </div>
           </div>
         </div>
       </div>
     </nav>
+
+    <!-- Add theme container after nav -->
+    <div class="theme-container">
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg
+          class="sun-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
+          />
+        </svg>
+      </button>
+    </div>
+
     <!-- Main content -->
     <main>
       <!-- Add this after nav and before members spotlight section -->
       <section class="mission-section">
         <div class="mission-container">
-            <h2 class="mission-title fade-in-up">Misyon ng Alab Diwa</h2>
-            
-            <div class="mission-content">
-                <!-- Mission -->
-                <div class="mission-item fade-in-left">
-                    <div class="mission-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
-                            <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.93 12H18v7h-4v-6H10v6H6v-7H4.07L12 4.84z"/>
-                        </svg>
-                    </div>
-                    <h3>Aming Misyon</h3>
-                    <p>Nakatuon sa paglinang ng mga kabataang manunulat at mamamahayag, nagtataguyod ng kalayaan sa pamamahayag at pagpapalakas ng boses ng mga mag-aaral.</p>
-                </div>
+          <h2 class="mission-title fade-in-up">Misyon ng Alab Diwa</h2>
 
-                <!-- Values -->
-                <div class="mission-item fade-in">
-                    <div class="mission-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </div>
-                    <h3>Aming mga Pagpapahalaga</h3>
-                    <p>Katapatan sa pamamahayag, katotohanan, at pagrespeto sa karapatan ng bawat isa para sa mas mabuting komunidad.</p>
-                </div>
-
-                <!-- History -->
-                <div class="mission-item fade-in-right">
-                    <div class="mission-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#E53E3E">
-                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/>
-                        </svg>
-                    </div>
-                    <h3>Aming Kasaysayan</h3>
-                    <p>Itinatag noong 2023, patuloy kaming lumalago at umuunlad bilang boses ng mga mag-aaral sa pamamahayag.</p>
-                </div>
+          <div class="mission-content">
+            <!-- Mission -->
+            <div class="mission-item fade-in-left">
+              <div class="mission-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="48"
+                  height="48"
+                  fill="#E53E3E"
+                >
+                  <path
+                    d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.84L19.93 12H18v7h-4v-6H10v6H6v-7H4.07L12 4.84z"
+                  />
+                </svg>
+              </div>
+              <h3>Aming Misyon</h3>
+              <p>
+                Nakatuon sa paglinang ng mga kabataang manunulat at mamamahayag,
+                nagtataguyod ng kalayaan sa pamamahayag at pagpapalakas ng boses
+                ng mga mag-aaral.
+              </p>
             </div>
+
+            <!-- Values -->
+            <div class="mission-item fade-in">
+              <div class="mission-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="48"
+                  height="48"
+                  fill="#E53E3E"
+                >
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                  />
+                </svg>
+              </div>
+              <h3>Aming mga Pagpapahalaga</h3>
+              <p>
+                Katapatan sa pamamahayag, katotohanan, at pagrespeto sa
+                karapatan ng bawat isa para sa mas mabuting komunidad.
+              </p>
+            </div>
+
+            <!-- History -->
+            <div class="mission-item fade-in-right">
+              <div class="mission-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="48"
+                  height="48"
+                  fill="#E53E3E"
+                >
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"
+                  />
+                </svg>
+              </div>
+              <h3>Aming Kasaysayan</h3>
+              <p>
+                Itinatag noong 2023, patuloy kaming lumalago at umuunlad bilang
+                boses ng mga mag-aaral sa pamamahayag.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -468,7 +562,9 @@
           <ul class="footer__links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="news-and-articles.html">News & Articles</a></li>
+            <li>
+              <a href="news-and-articles.html">News & Articles</a>
+            </li>
           </ul>
         </div>
         <div class="footer__section">
@@ -525,5 +621,8 @@
     <!-- Non-module Scripts -->
     <script src="JavaScript Folder/script.js"></script>
     <script src="JavaScript Folder/dropdown.js"></script>
+
+    <!-- Add this before the closing body tag -->
+    <script src="JavaScript Folder/theme.js"></script>
   </body>
 </html>

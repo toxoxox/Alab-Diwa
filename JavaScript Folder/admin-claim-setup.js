@@ -148,3 +148,14 @@ const adminClaimSetup = new AdminClaimSetup();
 
 // Export utility function
 export const checkAdminStatus = () => adminClaimSetup.checkAdminStatus();
+
+// Add this export
+export const checkIfAdmin = async (uid) => {
+    try {
+        const adminRef = database.ref(`admins/${uid}`);
+        const snapshot = await adminRef.once('value');
+        return snapshot.exists();
+    } catch (error) {
+        return false;
+    }
+};
