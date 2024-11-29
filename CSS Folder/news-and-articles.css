@@ -306,14 +306,14 @@ body {
 /* Keep all your existing news-articles specific styles below */
 .news-articles-container {
   max-width: 1200px;
-  margin: 100px auto 0;
+  margin: 120px auto 0;
   padding: 0 20px;
 }
 
 .news-articles-title {
+  margin-bottom: 2.5rem;
   font-size: 2.5rem;
-  color: #e53e3e;
-  margin-bottom: 2rem;
+  color: var(--heading-color);
   text-align: center;
 }
 
@@ -763,7 +763,8 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   padding: 0 1rem;
 }
 
@@ -1010,10 +1011,14 @@ body {
 /* Update the createCommentElement function's template */
 
 .admin-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
+  position: fixed;
+  top: 120px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+  pointer-events: none;
 }
 
 .delete-article-btn {
@@ -1684,7 +1689,7 @@ nav {
 /* Remove or update the container background */
 .news-articles-container {
   max-width: 1200px;
-  margin: 100px auto 0;
+  margin: 120px auto 0;
   padding: 0 20px;
   /* Remove the background-color property */
 }
@@ -2364,38 +2369,415 @@ nav {
 
 /* Desktop Navigation Styles */
 @media screen and (min-width: 769px) {
-    .nav__links {
-        position: static;
-        flex-direction: row;
-        height: auto;
-        background: none !important; /* Force no background */
-        width: auto;
-        gap: 2.5rem;
+  .nav__links {
+    position: static;
+    flex-direction: row;
+    height: auto;
+    background: none !important; /* Force no background */
+    width: auto;
+    gap: 2.5rem;
+  }
+
+  /* Dark mode specific styles */
+  [data-theme="dark"] .nav__links {
+    background: none !important;
+  }
+
+  [data-theme="dark"] .nav__links li a {
+    background: none !important;
+    color: white !important;
+  }
+
+  [data-theme="dark"] .nav__links li a:hover,
+  [data-theme="dark"] .nav__links li a.active {
+    color: var(--link-color) !important;
+    background: none !important;
+  }
+
+  /* Remove any background from nav links */
+  .nav__links li a {
+    background: none !important;
+  }
+
+  .nav__links li a:hover,
+  .nav__links li a.active {
+    background: none !important;
+  }
+}
+
+/* Add these styles to your existing CSS file */
+
+.upload-article-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--link-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px var(--shadow);
+  width: auto;
+  justify-content: center;
+  pointer-events: auto;
+  height: 40px;
+}
+
+.upload-article-btn:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.upload-article-btn .upload-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.upload-article-btn span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 40px;
+}
+
+/* Article Upload Popup Styles */
+.article-popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.article-popup-overlay.active {
+  display: flex;
+}
+
+.article-popup-content {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background: var(--link-color);
+  color: white;
+}
+
+.form-actions .cancel-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.image-preview {
+  margin-top: 1rem;
+  max-width: 200px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.file-name {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Sort Section Styles */
+.sort-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 2rem;
+    padding: 0 1rem;
+    justify-content: flex-end;
+}
+
+.sort-label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.sort-select {
+    padding: 0.4rem 2rem 0.4rem 1rem;
+    border: 1px solid var(--link-color);
+    border-radius: 4px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Montserrat", sans-serif;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e53e3e'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.2em;
+}
+
+.sort-select:hover {
+    border-color: var(--button-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sort-select:focus {
+    box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+    border-color: var(--link-color);
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+    .sort-section {
+        margin: 0.5rem 0 1.5rem;
     }
 
-    /* Dark mode specific styles */
-    [data-theme="dark"] .nav__links {
-        background: none !important;
+    .sort-select {
+        max-width: 150px;
+        font-size: 0.85rem;
+        padding: 0.35rem 2rem 0.35rem 0.75rem;
     }
 
-    [data-theme="dark"] .nav__links li a {
-        background: none !important;
-        color: white !important;
+    .sort-label {
+        font-size: 0.85rem;
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .sort-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b6b'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+}
+
+/* Delete button styles */
+.article-admin-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.news-article-card:hover .article-admin-controls {
+    opacity: 1;
+}
+
+.delete-article-btn {
+    background: rgba(229, 62, 62, 0.9);
+    border: none;
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+}
+
+.delete-article-btn:hover {
+    background: rgb(229, 62, 62);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-article-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .delete-article-btn {
+    background: rgba(255, 107, 107, 0.9);
+}
+
+[data-theme="dark"] .delete-article-btn:hover {
+    background: rgb(255, 107, 107);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+    .article-admin-controls {
+        opacity: 1;
+        top: 8px;
+        right: 8px;
     }
 
-    [data-theme="dark"] .nav__links li a:hover,
-    [data-theme="dark"] .nav__links li a.active {
-        color: var(--link-color) !important;
-        background: none !important;
+    .delete-article-btn {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
     }
+}
 
-    /* Remove any background from nav links */
-    .nav__links li a {
-        background: none !important;
+/* Notification styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+}
+
+.notification--success {
+    border-left: 4px solid #48bb78;
+}
+
+.notification--error {
+    border-left: 4px solid #f56565;
+}
+
+.notification__content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.notification__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.notification__icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.notification--success .notification__icon svg {
+    fill: #48bb78;
+}
+
+.notification--error .notification__icon svg {
+    fill: #f56565;
+}
+
+.notification__message {
+    color: var(--text-color);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.notification__close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.notification__close svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-secondary);
+}
+
+.notification--fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
     }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
-    .nav__links li a:hover,
-    .nav__links li a.active {
-        background: none !important;
+@keyframes fadeOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .notification {
+    background: var(--card-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+    .notification {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        max-width: none;
     }
 }

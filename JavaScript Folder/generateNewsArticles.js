@@ -1,5 +1,4 @@
 import { auth, database } from './firebase-config.js';
-import { newsArticles } from './newsArticlesData.js';
 import adminManager from './adminManager.js';
 
 function createModal(title, message, confirmText = 'Confirm', cancelText = 'Cancel', action = 'delete') {
@@ -36,10 +35,102 @@ function createModal(title, message, confirmText = 'Confirm', cancelText = 'Canc
 document.addEventListener('DOMContentLoaded', () => {
     const newsArticlesGrid = document.getElementById('news-articles-grid');
     const categoryButtons = document.querySelectorAll('.category-button');
+    const sortSelect = document.getElementById('sort-articles');
+    let currentArticles = [];
+    let currentCategory = 'All';
+
+    function parseArticleDate(dateStr) {
+        try {
+            // Handle MM/DD/YYYY format
+            const [month, day, year] = dateStr.split('/');
+            return new Date(year, month - 1, day);
+        } catch (e) {
+            console.error('Error parsing date:', dateStr);
+            return new Date(0);
+        }
+    }
+
+    function sortArticles(articles, sortOrder) {
+        if (!articles || articles.length === 0) {
+            console.log('No articles to sort');
+            return [];
+        }
+
+        return [...articles].sort((a, b) => {
+            // Convert dates to timestamps for comparison
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+
+            // Debug logs
+            console.log('Sorting:', {
+                articleA: a.title,
+                dateA: a.createdAt,
+                timestampA: dateA,
+                articleB: b.title,
+                dateB: b.createdAt,
+                timestampB: dateB,
+                sortOrder
+            });
+
+            // Compare timestamps
+            const comparison = sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+            return comparison;
+        });
+    }
+
+    function filterArticles(category) {
+        currentCategory = category;
+        const articlesRef = database.ref('articles');
+        
+        articlesRef.once('value', (snapshot) => {
+            const articles = [];
+            snapshot.forEach((childSnapshot) => {
+                const article = childSnapshot.val();
+                articles.push({
+                    id: childSnapshot.key,
+                    ...article
+                });
+            });
+            
+            // Filter by category
+            const filteredArticles = category === 'All' 
+                ? articles 
+                : articles.filter(article => article.category === category);
+            
+            // Store the filtered articles
+            currentArticles = filteredArticles;
+            
+            // Sort using current sort order
+            const sortedArticles = sortArticles(filteredArticles, sortSelect.value);
+            
+            // Generate the articles
+            newsArticlesGrid.innerHTML = '';
+            generateArticles(sortedArticles);
+        });
+    }
+
+    // Update the sort event listener
+    sortSelect.addEventListener('change', (e) => {
+        console.log('Sort changed:', e.target.value);
+        console.log('Current articles:', currentArticles);
+        
+        if (!currentArticles || currentArticles.length === 0) {
+            console.log('No articles to sort');
+            return;
+        }
+
+        // Make a fresh copy of the articles array
+        const articlesToSort = [...currentArticles];
+        
+        // Sort the articles
+        const sortedArticles = sortArticles(articlesToSort, e.target.value);
+        
+        // Clear and regenerate the grid with sorted articles
+        newsArticlesGrid.innerHTML = '';
+        generateArticles(sortedArticles);
+    });
     
     const openArticleId = sessionStorage.getItem('openArticleId');
-    
-    console.log('Initial articles loaded:', newsArticles);
     
     function truncateContent(content, maxLength = 150) {
         const plainText = content.replace(/<[^>]*>/g, '');
@@ -48,34 +139,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function generateArticles(articles) {
+        // Clear the grid first
         newsArticlesGrid.innerHTML = '';
         
-        articles.forEach((item, index) => {
-            const articleId = `article-${index}`;
-            const newsArticleElement = document.createElement('article');
-            newsArticleElement.className = 'news-article-card';
-            newsArticleElement.dataset.articleId = articleId;
+        // Generate and append articles in the sorted order
+        articles.forEach(article => {
+            const articleElement = document.createElement('article');
+            articleElement.className = 'news-article-card';
+            articleElement.dataset.articleId = article.id;
 
-            newsArticleElement.innerHTML = `
-                <img src="${item.image}" alt="${item.title}" class="news-article-image">
+            articleElement.innerHTML = `
+                <div class="article-admin-controls" style="display: none;">
+                    <button class="delete-article-btn" aria-label="Delete article">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
+                </div>
+                <img src="${article.imageUrl}" alt="${article.title}" class="news-article-image">
                 <div class="news-article-content">
-                    <span class="news-article-category">${item.category}</span>
-                    <h2 class="news-article-title">${item.title}</h2>
+                    <span class="news-article-category">${article.category}</span>
+                    <h2 class="news-article-title">${article.title}</h2>
                     <div class="news-article-meta">
-                        <span class="news-article-date">${item.date}</span>
-                        <span class="news-article-author">Ni ${item.author}</span>
+                        <span class="news-article-date">${article.createdAt}</span>
+                        <span class="news-article-author">Ni ${article.author}</span>
                     </div>
-                    <div class="news-article-preview">${truncateContent(item.content)}</div>
-                    <div class="news-article-full-content" style="display: none;">${item.content}</div>
+                    <div class="news-article-preview">${article.content.substring(0, 150)}...</div>
+                    <div class="news-article-full-content" style="display: none;">${article.content}</div>
                     <button class="read-more-btn">Read More</button>
                 </div>
-
                 <!-- Comments Section -->
                 <section class="comments-section" style="display: none;">
                     <h2 class="comments-section__title">Comments</h2>
                     <div class="comments-container"></div>
-                    
-                    <!-- Comment Form -->
                     <div class="comment-form">
                         <h3 class="comment-form__title">Leave a Comment</h3>
                         <div class="comment-input-container">
@@ -98,16 +194,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 </section>
             `;
 
-            const readMoreBtn = newsArticleElement.querySelector('.read-more-btn');
+            // Add event listeners
+            setupArticleInteractions(articleElement, article.id);
+            
+            // Append the article to the grid
+            newsArticlesGrid.appendChild(articleElement);
+        });
+    }
+
+    function setupArticleInteractions(articleElement, articleId) {
+        const readMoreBtn = articleElement.querySelector('.read-more-btn');
             readMoreBtn.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 const allCards = document.querySelectorAll('.news-article-card');
-                const commentsSection = newsArticleElement.querySelector('.comments-section');
-                const articleId = newsArticleElement.dataset.articleId;
+            const commentsSection = articleElement.querySelector('.comments-section');
 
                 // Hide all other cards
                 allCards.forEach(card => {
-                    if (card !== newsArticleElement) {
+                if (card !== articleElement) {
                         card.style.display = 'none';
                     }
                 });
@@ -121,52 +225,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     newsArticlesGrid.insertBefore(backButton, newsArticlesGrid.firstChild);
                 }
 
-                // Handle back button click
-                backButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    allCards.forEach(card => {
-                        card.style.display = '';
-                        card.classList.remove('expanded');
-                        const cardCommentsSection = card.querySelector('.comments-section');
-                        if (cardCommentsSection) {
-                            cardCommentsSection.style.display = 'none';
-                        }
-                        card.querySelector('.news-article-preview').style.display = 'block';
-                        card.querySelector('.news-article-full-content').style.display = 'none';
-                        card.querySelector('.read-more-btn').style.display = 'block';
-                    });
-                    backButton.remove();
-                    newsArticlesGrid.classList.remove('single-article-view');
-                });
-
                 // Expand clicked card
-                newsArticleElement.classList.add('expanded');
+            articleElement.classList.add('expanded');
                 newsArticlesGrid.classList.add('single-article-view');
-                newsArticleElement.querySelector('.news-article-preview').style.display = 'none';
-                newsArticleElement.querySelector('.news-article-full-content').style.display = 'block';
+            articleElement.querySelector('.news-article-preview').style.display = 'none';
+            articleElement.querySelector('.news-article-full-content').style.display = 'block';
                 commentsSection.style.display = 'block';
                 readMoreBtn.style.display = 'none';
 
-                // Load existing comments
-                await loadComments(articleId, newsArticleElement);
-
-                // Setup comment form when article is expanded
-                setupCommentForm(newsArticleElement, articleId);
-            });
-
-            newsArticlesGrid.appendChild(newsArticleElement);
-            
-            if (openArticleId === articleId) {
-                sessionStorage.removeItem('openArticleId');
-                setTimeout(() => {
-                    const readMoreBtn = newsArticleElement.querySelector('.read-more-btn');
-                    if (readMoreBtn) {
-                        readMoreBtn.click();
-                        newsArticleElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 100);
-            }
+            // Load comments
+            await loadComments(articleId, articleElement);
+            setupCommentForm(articleElement, articleId);
         });
+
+            // Check if user is admin and show delete button
+            const checkAdminAndSetupControls = async () => {
+                const user = auth.currentUser;
+                if (user) {
+                    const isAdmin = await adminManager.checkIfAdmin(user.uid);
+                const adminControls = articleElement.querySelector('.article-admin-controls');
+                    if (adminControls) {
+                        adminControls.style.display = isAdmin ? 'flex' : 'none';
+                    }
+                }
+            };
+
+            // Setup delete button functionality
+        const deleteBtn = articleElement.querySelector('.delete-article-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    const shouldDelete = await createModal(
+                        'Delete Article',
+                        'Are you sure you want to delete this article? This action cannot be undone.',
+                        'Delete',
+                        'Cancel'
+                    );
+
+                    if (shouldDelete) {
+                        try {
+                        await database.ref(`articles/${articleId}`).remove();
+                        articleElement.remove();
+                            showNotification('success', 'Article deleted successfully');
+                        } catch (error) {
+                            console.error('Error deleting article:', error);
+                            showNotification('error', 'Failed to delete article');
+                        }
+                    }
+                });
+            }
+
+            // Check admin status when article is created
+            checkAdminAndSetupControls();
+
+            // Listen for auth state changes
+            auth.onAuthStateChanged(checkAdminAndSetupControls);
     }
 
     function createCommentElement(comment, commentId, articleId) {
@@ -451,49 +566,11 @@ document.addEventListener('DOMContentLoaded', () => {
         auth.onAuthStateChanged(updateFormState);
     }
 
-    function filterArticles(category) {
-        console.log('Filtering by category:', category);
-        let articlesToShow;
-        
-        if (category === 'All') {
-            articlesToShow = newsArticles;
-        } else {
-            articlesToShow = newsArticles.filter(article => article.category === category);
-        }
-        
-        console.log('Articles to show:', articlesToShow);
-        newsArticlesGrid.innerHTML = ''; // Clear the grid
-        generateArticles(articlesToShow);
-
-        // Check if there's a selected article from highlights
-        const selectedArticle = sessionStorage.getItem('selectedArticle');
-        if (selectedArticle) {
-            // Find the article card with matching title
-            const articleCards = document.querySelectorAll('.news-article-card');
-            articleCards.forEach(card => {
-                const cardTitle = card.querySelector('.news-article-title').textContent;
-                if (cardTitle === selectedArticle) {
-                    // Click the read more button of this card
-                    const readMoreBtn = card.querySelector('.read-more-btn');
-                    if (readMoreBtn) {
-                        readMoreBtn.click();
-                        // Scroll to the article
-                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-            // Clear the selected article from session storage
-            sessionStorage.removeItem('selectedArticle');
-        }
-    }
-
     categoryButtons.forEach(button => {
         const category = button.dataset.category;
-        console.log('Setting up button for category:', category);
         
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('Button clicked:', category);
             
             // Remove back button if it exists
             const backButton = document.querySelector('.back-to-articles');
@@ -515,4 +592,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load - show all articles
     filterArticles('All');
+
+    // Handle back button click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('back-to-articles')) {
+            // Get all article cards before modifying the grid
+            const articleCards = document.querySelectorAll('.news-article-card');
+            if (!articleCards.length) return; // Exit if no cards found
+
+            const articlesGrid = document.getElementById('news-articles-grid');
+            if (!articlesGrid) return; // Exit if grid not found
+
+            // Reset grid display
+            articlesGrid.style.display = 'grid';
+            
+            // Show all articles
+            articleCards.forEach(card => {
+                if (card) {
+                    card.style.display = 'block';
+                    card.classList.remove('expanded');
+                }
+            });
+
+            // Show categories section
+            const categoriesSection = document.querySelector('.categories-section');
+            if (categoriesSection) {
+                categoriesSection.style.display = 'flex';
+            }
+
+            // Remove back button
+            e.target.remove();
+        }
+    });
+
+    function showNotification(type, message) {
+        // Remove any existing notification
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification--${type}`;
+        notification.innerHTML = `
+            <div class="notification__content">
+                <div class="notification__icon">
+                    ${type === 'success' 
+                        ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>'
+                        : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>'
+                    }
+                </div>
+                <p class="notification__message">${message}</p>
+            </div>
+            <button class="notification__close" aria-label="Close notification">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                </svg>
+            </button>
+        `;
+
+        // Add to document
+        document.body.appendChild(notification);
+
+        // Add click handler for close button
+        notification.querySelector('.notification__close').addEventListener('click', () => {
+            notification.classList.add('notification--fade-out');
+            setTimeout(() => notification.remove(), 300);
+        });
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            notification.classList.add('notification--fade-out');
+            setTimeout(() => notification.remove(), 300);
+        }, 5000);
+    }
 });

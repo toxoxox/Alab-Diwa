@@ -24,9 +24,11 @@ class AdminManager {
         try {
             const adminSnapshot = await database.ref(`admins/${uid}`).once('value');
             const isAdmin = adminSnapshot.exists();
+            console.log('Admin check for uid:', uid, 'Result:', isAdmin);
             this.isAdmin = isAdmin;
             return isAdmin;
         } catch (error) {
+            console.error('Error checking admin status:', error);
             return false;
         }
     }

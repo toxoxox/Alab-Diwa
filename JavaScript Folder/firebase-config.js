@@ -15,6 +15,7 @@ if (!firebase.apps?.length) {
 
 const auth = firebase.auth();
 const database = firebase.database();
+const firestore = firebase.firestore();
 
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .catch((error) => {
@@ -31,4 +32,4 @@ export const checkDatabaseAccess = async () => {
     }
 };
 
-export { auth, database }; 
+export { auth, database, firestore }; 
